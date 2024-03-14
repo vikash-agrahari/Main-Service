@@ -10,8 +10,8 @@ import { OrderService } from './order.service';
 import { OrderDto } from './dto/order.dto';
 import { Request, Response } from 'express';
 import { RESPONSE_DATA } from 'src/common/responses';
-import { UserSession } from 'src/modules/client/on-boarding/interfaces/on-boarding.interface';
-import { JwtClientAuthGuard } from 'src/guards/jwt-auth.guard';
+import { UserSession } from 'src/modules/user/on-boarding/interfaces/on-boarding.interface';
+import { JwtUserAuthGuard } from 'src/guards/jwt-auth.guard';
 
 
 
@@ -27,7 +27,7 @@ export class OrderController {
   @Post('createOrder')
   @ApiOperation({ summary: 'create default order' })
   @ApiBearerAuth()
-  @UseGuards(JwtClientAuthGuard)
+  @UseGuards(JwtUserAuthGuard)
   async createOrder(@Body() orderDto: OrderDto, @Req() req: Request, @Res() response: Response,) {
     try {
       const sessionData = req.user as UserSession;

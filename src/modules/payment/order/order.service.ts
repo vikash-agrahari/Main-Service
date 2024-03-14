@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { RESPONSE_DATA } from 'src/common/responses';
 import { ConfigService } from '@nestjs/config';
 import { OrderEntity } from 'src/entity/order.entity';
-import { ClientOnBoardingService } from '../../client/on-boarding/on-boarding.service'
+import { UserOnBoardingService } from '../../user/on-boarding/on-boarding.service'
 import { TransactionService } from '../../payment/transaction/transaction.service'
 import { OrderDto } from './dto/order.dto';
 import { generateRef } from 'src/common/utils';
@@ -12,7 +12,7 @@ export class OrderService {
 	constructor(
 		private readonly orderEntity: OrderEntity,
 		private config: ConfigService,
-		private readonly clientOnBoardingService: ClientOnBoardingService,
+		private readonly userOnBoardingService: UserOnBoardingService,
 		private readonly transactionService: TransactionService,
 	) {
 	}
@@ -23,7 +23,7 @@ export class OrderService {
 		try {
 			const orderId = generateRef('ORD');
 			const transactionId = generateRef('TRN');
-			let userDetails: any = await this.clientOnBoardingService.userDetails(sessionData.userId);
+			let userDetails: any = await this.userOnBoardingService.userDetails(sessionData.userId);
 			const order = {
 				clientId: sessionData.userId,
 				orderId: orderId,

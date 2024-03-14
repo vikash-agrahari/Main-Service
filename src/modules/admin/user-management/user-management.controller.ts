@@ -4,14 +4,14 @@ import { Request, Response } from 'express';
 import { HttpResponse } from 'src/common/httpResponse';
 import { RESPONSE_DATA } from 'src/common/responses';
 import { JwtAdminAuthGuard } from 'src/guards/jwt-auth.guard';
-import { ClientManagementService } from './client-management.service';
+import { UserManagementService } from './user-management.service';
 import { ClientListingDto } from './dto/create-client-management.dto';
 
 @ApiTags('Admin : Client Management')
 @Controller('/')
-export class ClientManagementController {
+export class UserManagementController {
   constructor(
-    private readonly clientManagementService: ClientManagementService,
+    private readonly userManagementService: UserManagementService,
     private readonly httpResponse: HttpResponse,
   ) {}
 
@@ -25,7 +25,7 @@ export class ClientManagementController {
   @Get('/list')
   @ApiOperation({ summary: 'API to list client' })
   async clientListing(@Query() clientListingDto: ClientListingDto, @Res() res: Response) {
-    const clientListingData = await this.clientManagementService.clientListing(clientListingDto);
+    const clientListingData = await this.userManagementService.clientListing(clientListingDto);
     return this.httpResponse.sendResponse(res, RESPONSE_DATA.SUCCESS, clientListingData);
   }
 

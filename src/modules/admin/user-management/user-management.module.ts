@@ -4,12 +4,12 @@ import { HttpResponse } from 'src/common/httpResponse';
 import { ConfigModule } from '@nestjs/config';
 import { GuardModule } from 'src/guards/guards.module';
 import { GuardService } from 'src/guards/guards.service';
-import { ClientManagementService } from './client-management.service';
-import { ClientManagementController } from './client-management.controller';
+import { UserManagementService } from './user-management.service';
+import { UserManagementController } from './user-management.controller';
 
 @Module({
   imports: [ConfigModule.forRoot(), EntityModule, GuardModule],
-  controllers: [ClientManagementController],
-  providers: [ClientManagementService, HttpResponse, GuardService],
+  controllers: [UserManagementController],
+  providers: [UserManagementService, HttpResponse, GuardService],
 })
-export class ClientManagementModule {}
+export class UserManagementModule {}

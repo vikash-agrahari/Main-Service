@@ -6,7 +6,7 @@ import { PassportModule } from '@nestjs/passport';
 import { CONSTANT } from 'src/common/constant';
 import { HttpResponse } from 'src/common/httpResponse';
 import { EntityModule } from 'src/entity/entity.module';
-import { JwtClientStrategy } from './jwt.strategy';
+import { JwtUserStrategy } from './jwt.strategy';
 import { JwtAdminStrategy } from './jwt.strategy';
 
 @Module({
@@ -17,7 +17,7 @@ import { JwtAdminStrategy } from './jwt.strategy';
     PassportModule,
     EntityModule,
   ],
-  providers: [GuardService, JwtClientStrategy,JwtAdminStrategy, HttpResponse, BasicStrategy],
+  providers: [GuardService, JwtUserStrategy,JwtAdminStrategy, HttpResponse, BasicStrategy],
   exports: [JwtModule],
 })
 export class GuardModule {}

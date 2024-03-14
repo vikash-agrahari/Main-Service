@@ -1,5 +1,5 @@
 import { Connection } from 'mongoose';
-import { ClientSchema } from './client.schema';
+import { UserSchema } from './user.schema';
 import { Logchema } from './log.schema';
 import { TransactionSchema } from './transaction.schema';
 import { OrderSchema } from './order.schema';
@@ -10,8 +10,8 @@ import { AdminSessionSchema } from './adminSession.schema';
 
 export const schemaProviders = [
   {
-    provide: 'CLIENT_MODEL',
-    useFactory: (connection: Connection) => connection.model(ENUM.COLLECTIONS.CLIENT, ClientSchema),
+    provide: 'USER_MODEL',
+    useFactory: (connection: Connection) => connection.model(ENUM.COLLECTIONS.USER, UserSchema),
     inject: ['DATABASE_CONNECTION'],
   },
   {
