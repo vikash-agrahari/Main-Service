@@ -56,7 +56,7 @@ export class OnboardingService {
       throw new BadRequestException(RESPONSE_MSG.INVALID_PASSWORD);
       const payload: CreateAdminSession = {
         adminId: checkData._id,
-        status: ENUM.CLIENT_PROFILE_STATUS.ACTIVE,
+        status: ENUM.USER_PROFILE_STATUS.ACTIVE,
       };
       await this.adminSessionEntity.deleteMany({ adminId: checkData._id });
       const sessionData = await this.adminSessionEntity.createAdminSession(payload);

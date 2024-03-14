@@ -38,7 +38,7 @@ export const ENUM = {
   },
   
 
-  CLIENT_PROFILE_STATUS: {
+  USER_PROFILE_STATUS: {
     ACTIVE: 1,
     BLOCKED: 4,
     DELETED: 3,

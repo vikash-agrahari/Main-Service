@@ -25,21 +25,8 @@ export class UserOnBoardingService {
         createOnboardingDto.password,
         CONSTANT.PASSWORD_HASH_SALT,
       );
-
       const createClient = Object.assign(createOnboardingDto);
-
       const data = await this.userEntity.create(createClient);
-
-      const tapPayload = {
-        firstName: data.firstName,
-        lastName: data.lastName,
-        mobileNo: data.mobileNo,
-        email: data.email,
-        clientId: data._id
-      }
-      const tap = await this.createTapUser(tapPayload)
-      await this.userEntity.findOneAndUpdate({ _id: data._id },{tapId:tap.id});
-
       return [RESPONSE_DATA.SUCCESS, { id: data._id }];
     } catch (error) {
       console.log('Error in signUp:---------->', error);
@@ -47,44 +34,8 @@ export class UserOnBoardingService {
     }
   }
 
-  async createTapUser(payload: any) {
-    const url = TAP_CONSTANT.USER_CREATE_URL;
-    const headers = {
-      'Content-Type': TAP_CONSTANT.contentType,
-      Authorization: `Bearer ${this.config.get('TAP_SECRET')}`,
-    };
-    const axiosConfig: AxiosRequestConfig = {
-      headers,
-    };
-    const data = {
-      first_name: payload.firstName,
-      last_name: payload.lastName,
-      email: payload.email,
-      phone: {
-        number: payload.mobileNo,
-      },
-      description: 'User Created',
-      metadata: {
-        clientId: payload.clientId,
-      },
-      currency: 'BHD',
-    };
-
-    try {
-      const response: AxiosResponse = await axios.post(url, data, axiosConfig);
-      return response.data;
-    } catch (error) {
-      console.error('Error:', error.message);
-      // ykaApiCallLogger.error(error);
-      if (axios.isAxiosError(error)) {
-        console.log('axios error details:', error.response?.data);
-        return [RESPONSE_DATA.ERROR, {}];
-      }
-    }
-  }
-
   async userDetails(userId: string) {
-   return await this.userEntity.getUserDetails({ _id: userId });
+    return await this.userEntity.getUserDetails({ _id: userId });
   }
   async profileDetails(payload: UserSession) {
     const result = await this.userEntity.getUserDetails({ _id: payload.userId });
@@ -102,14 +53,14 @@ export class UserOnBoardingService {
     if (checkUser.password !== this.guardService.hashData(loginDto.password, CONSTANT.PASSWORD_HASH_SALT))
       throw new BadRequestException(RESPONSE_MSG.INVALID_PASSWORD);
 
-    if (checkUser.blockedStatus == ENUM.CLIENT_PROFILE_STATUS.BLOCKED) throw new ForbiddenException(RESPONSE_MSG.ACCOUNT_BLOCKED);
-    if (checkUser.status == ENUM.CLIENT_PROFILE_STATUS.DELETED) throw new BadRequestException(RESPONSE_MSG.USER_NOT_EXIST);
+    if (checkUser.blockedStatus == ENUM.USER_PROFILE_STATUS.BLOCKED) throw new ForbiddenException(RESPONSE_MSG.ACCOUNT_BLOCKED);
+    if (checkUser.status == ENUM.USER_PROFILE_STATUS.DELETED) throw new BadRequestException(RESPONSE_MSG.USER_NOT_EXIST);
 
     await this.userSessionEntity.deleteUserSession({ clientId: checkUser._id });
 
     const payload: CreateClientSession = {
       clientId: checkUser?._id,
-      status: ENUM.CLIENT_PROFILE_STATUS.ACTIVE
+      status: ENUM.USER_PROFILE_STATUS.ACTIVE
     };
     const sessionData = await this.userSessionEntity.createUserSession(payload);
     const token = await this.guardService.jwtTokenGeneration({
@@ -125,48 +76,4 @@ export class UserOnBoardingService {
       },
     ];
   }
-
-  async getUserSavedCard(payload: UserSession) {
-		try {
-			const userDetails = await this.userEntity.getUserDetails({ _id: payload.userId });
-			const cardList = await this.getTapCardsList(userDetails.tapId);
-      return [
-        RESPONSE_DATA.PROFILE,
-        {
-          data: cardList
-        },
-      ];
-		} catch (err) {
-			throw err;
-		}
-	}
-
-  async getTapCardsList(tapId: string) {
-    const url = `https://api.tap.company/v2/card/${tapId}`;
-    const headers = {
-      'Content-Type': TAP_CONSTANT.contentType,
-      Authorization: `Bearer ${this.config.get('TAP_SECRET')}`,
-    };
-    const axiosConfig: AxiosRequestConfig = {
-      headers,
-    };
-  
-    try {
-      console.log('url ===== >', url);
-      const response: AxiosResponse= await axios.get(
-        url,
-        axiosConfig,
-      );
-      console.log('response ===== >', response);
-      return response.data;;
-      
-    
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        console.log('axios error details:', error.response?.data);
-        return [RESPONSE_DATA.ERROR, {}];
-      }
-    }
-  }
-
 }

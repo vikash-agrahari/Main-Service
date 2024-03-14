@@ -74,19 +74,4 @@ export class UserOnBoardingController {
      const [status, result] = await this.userOnBoardingService.profileDetails(sessionData);
      return this.httpResponse.sendResponse(response, status, result);
    }
-
-    /**
-   * @author TAP
-   * @description This function will be used to get user profile details for client and vendor.
-   */
-
-    @Get('/cardList')
-    @ApiOperation({ summary: 'Card list request API' })
-    @ApiBearerAuth()
-    @UseGuards(JwtUserAuthGuard)
-    async cardList(@Req() req: Request, @Res() response: Response) {
-      const sessionData = req.user as UserSession;
-      const [status, result] = await this.userOnBoardingService.getUserSavedCard(sessionData);
-      return this.httpResponse.sendResponse(response, status, result);
-    }
 }
