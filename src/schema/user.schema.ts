@@ -18,7 +18,7 @@ export const UserSchema = new mongoose.Schema(
     email: { type: Schema.Types.String, required: true },
     mobileNo: { type: Schema.Types.String, required: true,unique:true, },
     password: { type: Schema.Types.String, required: true },
-    tapId: { type: Schema.Types.String },
+    status: { type: Schema.Types.Number, default: ENUM.USER_PROFILE_STATUS.ACTIVE },
   },
   {
     versionKey: false,

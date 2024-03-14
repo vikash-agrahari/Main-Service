@@ -16,7 +16,7 @@ export interface IAdminSession extends Document {
 export const AdminSessionSchema = new Schema(
   {
     adminId: { type: SchemaTypes.ObjectId, required: true, index: true, ref: ENUM.COLLECTIONS.ADMIN },
-    status: { type: SchemaTypes.Number, default: ENUM.CLIENT_PROFILE_STATUS.ACTIVE },
+    status: { type: SchemaTypes.Number, default: ENUM.USER_PROFILE_STATUS.ACTIVE },
     ipAddress: { type: SchemaTypes.String },
     deviceToken: { type: SchemaTypes.String },
   },

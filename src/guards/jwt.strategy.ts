@@ -24,7 +24,7 @@ export class JwtAdminStrategy extends PassportStrategy(Strategy, 'adminJWT') {
     if (payload) {
       const [adminData, sessionData] = await Promise.all([
         this.adminEntity.findOne({ _id: new mongoose.Types.ObjectId(payload.adminId) }),
-        this.adminSessionEntity.findOne({ _id: new mongoose.Types.ObjectId(payload.sessionId), status: ENUM.CLIENT_PROFILE_STATUS.ACTIVE }),
+        this.adminSessionEntity.findOne({ _id: new mongoose.Types.ObjectId(payload.sessionId), status: ENUM.USER_PROFILE_STATUS.ACTIVE }),
       ]);
       if (!sessionData) throw new UnauthorizedException(RESPONSE_MSG.SESSION_EXPIRED);
       if (!adminData) throw new UnauthorizedException(RESPONSE_MSG.USER_NOT_EXIST);
@@ -57,12 +57,12 @@ export class JwtUserStrategy extends PassportStrategy(Strategy, 'userJWT') {
     if (payload) {
       const [userData, sessionData] = await Promise.all([
         this.userEntity.findOne({ _id: payload.clientId }),
-        this.userSessionEntity.findOne({ _id: payload.sessionId, status: ENUM.CLIENT_PROFILE_STATUS.ACTIVE }),
+        this.userSessionEntity.findOne({ _id: payload.sessionId, status: ENUM.USER_PROFILE_STATUS.ACTIVE }),
       ]);
       if (!sessionData) throw new UnauthorizedException(RESPONSE_MSG.SESSION_EXPIRED);
       if (!userData) throw new UnauthorizedException(RESPONSE_MSG.USER_NOT_EXIST);
-      else if (userData.blockedStatus == ENUM.CLIENT_PROFILE_STATUS.BLOCKED) throw new ForbiddenException(RESPONSE_MSG.ACCOUNT_BLOCKED);
-      else if (userData.status == ENUM.CLIENT_PROFILE_STATUS.DELETED) throw new UnauthorizedException(RESPONSE_MSG.USER_NOT_EXIST);
+      else if (userData.blockedStatus == ENUM.USER_PROFILE_STATUS.BLOCKED) throw new ForbiddenException(RESPONSE_MSG.ACCOUNT_BLOCKED);
+      else if (userData.status == ENUM.USER_PROFILE_STATUS.DELETED) throw new UnauthorizedException(RESPONSE_MSG.USER_NOT_EXIST);
         console.log('*******************   Session Validation End For User ******************************');
         const sessionUser = {
           sessionId: payload.sessionId,

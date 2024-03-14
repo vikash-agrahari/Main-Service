@@ -12,7 +12,7 @@ export class UserManagementService {
     const options: ClientListing = clientListingDto;
     const pipeline = [];
     const matchCondition = [];
-    matchCondition.push({ status: { $ne: ENUM.CLIENT_PROFILE_STATUS.DELETED } });
+    matchCondition.push({ status: { $ne: ENUM.USER_PROFILE_STATUS.DELETED } });
     if (clientListingDto.search) {
       const escapedSearchTerm = clientListingDto.search.replace(/[-[\]{}()*+!<=:?.\/\\^$|#\s,]/g, '\\+$&');
       matchCondition.push({
