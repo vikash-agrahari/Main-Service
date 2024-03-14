@@ -1,6 +1,6 @@
 export const ENUM = {
   COLLECTIONS: {
-    CLIENT: 'client',
+    USER: 'user',
     LOG:'log',
     TRANSACTION:'transaction',
     ORDER:'order',

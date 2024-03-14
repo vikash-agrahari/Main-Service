@@ -8,11 +8,11 @@ import { DatabaseModule } from './providers/database/db.module';
 import { schemaProviders } from './schema/schema.provider';
 import { APP_FILTER } from '@nestjs/core';
 import { AllExceptionsFilter } from 'src/filters/exceptionFilter';
-import { ClientOnBoardingModule } from './modules/client/on-boarding/on-boarding.module';
+import { UserOnBoardingModule } from './modules/user/on-boarding/on-boarding.module';
 import { TransactionModule } from './modules/payment/transaction/transaction.module';
 import { WebhookModule } from './modules/payment/webhook/webhook.module';
 import { OnboardingModule } from './modules/admin/onboarding/onboarding.module';
-import { ClientManagementModule } from './modules/admin/client-management/client-management.module';
+import { UserManagementModule } from './modules/admin/user-management/user-management.module';
 import { OrderModule } from './modules/payment/order/order.module';
 import { OrderManagementModule } from './modules/admin/order-management/order-management.module';
 
@@ -20,11 +20,11 @@ import { OrderManagementModule } from './modules/admin/order-management/order-ma
 //for routing admin and app path separately
 const routes: Routes = [
   {
-    path: '/client',
+    path: '/user',
     children: [
       {
         path: '/onboarding',
-        module: ClientOnBoardingModule,
+        module: UserOnBoardingModule,
       },
     ],
   },
@@ -65,7 +65,7 @@ const routes: Routes = [
       },
       {
         path: '/client',
-        module: ClientManagementModule,
+        module: UserManagementModule,
       },
       {
         path: '/order',
@@ -82,12 +82,12 @@ const routes: Routes = [
     DatabaseModule,
     LoggerModule,
     RouterModule.register(routes),
-    ClientOnBoardingModule,
+    UserOnBoardingModule,
     OrderModule,
     TransactionModule,
     WebhookModule,
     OnboardingModule,
-    ClientManagementModule,
+    UserManagementModule,
     OrderManagementModule
   ],
   providers: [

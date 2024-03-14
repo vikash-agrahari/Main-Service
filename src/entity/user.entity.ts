@@ -1,12 +1,12 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { Model } from 'mongoose';
-import { CreateOnboardingDto } from 'src/modules/client/on-boarding/dto/on-boarding.dto';
+import { CreateOnboardingDto } from 'src/modules/user/on-boarding/dto/on-boarding.dto';
 import { Dao } from 'src/providers/database/dao.provider';
-import { IClient } from 'src/schema/client.schema';
+import { IUser } from 'src/schema/user.schema';
 
 @Injectable()
-export class ClientEntity extends Dao {
-  constructor(@Inject('CLIENT_MODEL') private clientModel: Model<IClient>) {
+export class UserEntity extends Dao {
+  constructor(@Inject('USER_MODEL') private clientModel: Model<IUser>) {
     super(clientModel);
   }
 

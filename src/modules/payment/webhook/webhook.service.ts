@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { ClientEntity } from 'src/entity/client.entity';
 import { WebhookDto } from './dto/webhook.dto';
 import { ENUM } from 'src/common/enum';
 import { RESPONSE_DATA } from 'src/common/responses';
@@ -14,7 +13,6 @@ import { OrderService } from '../order/order.service';
 @Injectable()
 export class WebhookService {
   constructor(
-    private readonly clientEntity: ClientEntity,
     private readonly guardService: GuardService,
     private readonly orderEntity: OrderEntity,
 		private config: ConfigService,

@@ -7,7 +7,7 @@ import { ENUM } from 'src/common/enum';
 import { RESPONSE_MSG } from 'src/common/responses';
 import { AdminEntity } from 'src/entity/admin.entity';
 import { AdminSessionEntity } from 'src/entity/adminSession.entity';
-import { ClientEntity } from 'src/entity/client.entity';
+import { UserEntity } from 'src/entity/user.entity';
 import { UserSessionEntity } from 'src/entity/userSession.entity';
 
 @Injectable()
@@ -41,9 +41,9 @@ export class JwtAdminStrategy extends PassportStrategy(Strategy, 'adminJWT') {
 }
 
 @Injectable()
-export class JwtClientStrategy extends PassportStrategy(Strategy, 'clientJWT') {
+export class JwtUserStrategy extends PassportStrategy(Strategy, 'userJWT') {
   constructor(
-    private readonly clientEntity: ClientEntity,
+    private readonly userEntity: UserEntity,
     private readonly userSessionEntity: UserSessionEntity,
   ) {
     super({
@@ -56,7 +56,7 @@ export class JwtClientStrategy extends PassportStrategy(Strategy, 'clientJWT') {
   async validate(payload: { clientId: string; sessionId: string }) {
     if (payload) {
       const [userData, sessionData] = await Promise.all([
-        this.clientEntity.findOne({ _id: payload.clientId }),
+        this.userEntity.findOne({ _id: payload.clientId }),
         this.userSessionEntity.findOne({ _id: payload.sessionId, status: ENUM.CLIENT_PROFILE_STATUS.ACTIVE }),
       ]);
       if (!sessionData) throw new UnauthorizedException(RESPONSE_MSG.SESSION_EXPIRED);

@@ -8,12 +8,12 @@ import { HttpResponse } from 'src/common/httpResponse';
 import { WebhookController } from './webhook.controller';
 import { TransactionService } from '../transaction/transaction.service';
 import { OrderService } from '../order/order.service';
-import { ClientOnBoardingService } from 'src/modules/client/on-boarding/on-boarding.service';
+import { UserOnBoardingService } from 'src/modules/user/on-boarding/on-boarding.service';
 
 
 @Module({
   imports: [ConfigModule.forRoot(),EntityModule, GuardModule],
   controllers: [WebhookController],
-  providers: [WebhookService,TransactionService,OrderService,ClientOnBoardingService, GuardService, HttpResponse],
+  providers: [WebhookService,TransactionService,OrderService,UserOnBoardingService, GuardService, HttpResponse],
 })
 export class WebhookModule {}

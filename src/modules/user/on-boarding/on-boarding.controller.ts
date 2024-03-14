@@ -7,25 +7,25 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { HttpResponse } from 'src/common/httpResponse';
-import { ClientOnBoardingService } from './on-boarding.service';
+import { UserOnBoardingService } from './on-boarding.service';
 import { AuthGuard } from '@nestjs/passport';
 import { CreateOnboardingDto, LoginDto } from './dto/on-boarding.dto';
 import { UserSession } from './interfaces/on-boarding.interface';
-import { JwtClientAuthGuard } from 'src/guards/jwt-auth.guard';
+import { JwtUserAuthGuard } from 'src/guards/jwt-auth.guard';
 
 
-@ApiTags('Client : OnBoarding')
+@ApiTags('User : OnBoarding')
 @Controller('/')
-export class ClientOnBoardingController {
+export class UserOnBoardingController {
   constructor(
     private readonly httpResponse: HttpResponse,
-    private readonly clientOnBoardingService: ClientOnBoardingService,
+    private readonly userOnBoardingService: UserOnBoardingService,
   ) { }
 
 
 /**
    * @author Tap 
-   * @description signup for client
+   * @description signup for user
    * @Body {CreateOnboardingDto}
    */
   @Post('/signup')
@@ -37,7 +37,7 @@ export class ClientOnBoardingController {
     @Res() response: any,
   ) {
     try {
-      const [status, result] = await this.clientOnBoardingService.signUp(createOnboardingDto);
+      const [status, result] = await this.userOnBoardingService.signUp(createOnboardingDto);
       return this.httpResponse.sendResponse(response, status, result);
     } catch (error) {
       throw error;
@@ -56,7 +56,7 @@ export class ClientOnBoardingController {
   @ApiBasicAuth()
   @UseGuards(AuthGuard('basic'))
   async login(@Body() loginDto: LoginDto, @Res() response: Response) {
-    const [status, result] = await this.clientOnBoardingService.login(loginDto);
+    const [status, result] = await this.userOnBoardingService.login(loginDto);
     return this.httpResponse.sendResponse(response, status, result);
   }
 
@@ -68,10 +68,10 @@ export class ClientOnBoardingController {
    @Get('/')
    @ApiOperation({ summary: 'User profile request API' })
    @ApiBearerAuth()
-   @UseGuards(JwtClientAuthGuard)
+   @UseGuards(JwtUserAuthGuard)
    async profileDetails(@Req() req: Request, @Res() response: Response) {
      const sessionData = req.user as UserSession;
-     const [status, result] = await this.clientOnBoardingService.profileDetails(sessionData);
+     const [status, result] = await this.userOnBoardingService.profileDetails(sessionData);
      return this.httpResponse.sendResponse(response, status, result);
    }
 
@@ -83,10 +83,10 @@ export class ClientOnBoardingController {
     @Get('/cardList')
     @ApiOperation({ summary: 'Card list request API' })
     @ApiBearerAuth()
-    @UseGuards(JwtClientAuthGuard)
+    @UseGuards(JwtUserAuthGuard)
     async cardList(@Req() req: Request, @Res() response: Response) {
       const sessionData = req.user as UserSession;
-      const [status, result] = await this.clientOnBoardingService.getUserSavedCard(sessionData);
+      const [status, result] = await this.userOnBoardingService.getUserSavedCard(sessionData);
       return this.httpResponse.sendResponse(response, status, result);
     }
 }

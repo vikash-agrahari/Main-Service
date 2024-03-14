@@ -1,5 +1,5 @@
 import { BadRequestException, ForbiddenException, Injectable } from '@nestjs/common';
-import { ClientEntity } from 'src/entity/client.entity';
+import { UserEntity } from 'src/entity/user.entity';
 import { CreateOnboardingDto, LoginDto } from './dto/on-boarding.dto';
 import { ENUM } from 'src/common/enum';
 import { RESPONSE_DATA, RESPONSE_MSG } from 'src/common/responses';
@@ -11,9 +11,9 @@ import { UserSessionEntity } from 'src/entity/userSession.entity';
 import { ConfigService } from '@nestjs/config';
 
 @Injectable()
-export class ClientOnBoardingService {
+export class UserOnBoardingService {
   constructor(
-    private readonly clientEntity: ClientEntity,
+    private readonly userEntity: UserEntity,
     private readonly guardService: GuardService,
     private readonly userSessionEntity: UserSessionEntity,
     private config: ConfigService,
@@ -28,7 +28,7 @@ export class ClientOnBoardingService {
 
       const createClient = Object.assign(createOnboardingDto);
 
-      const data = await this.clientEntity.create(createClient);
+      const data = await this.userEntity.create(createClient);
 
       const tapPayload = {
         firstName: data.firstName,
@@ -38,7 +38,7 @@ export class ClientOnBoardingService {
         clientId: data._id
       }
       const tap = await this.createTapUser(tapPayload)
-      await this.clientEntity.findOneAndUpdate({ _id: data._id },{tapId:tap.id});
+      await this.userEntity.findOneAndUpdate({ _id: data._id },{tapId:tap.id});
 
       return [RESPONSE_DATA.SUCCESS, { id: data._id }];
     } catch (error) {
@@ -84,10 +84,10 @@ export class ClientOnBoardingService {
   }
 
   async userDetails(userId: string) {
-   return await this.clientEntity.getUserDetails({ _id: userId });
+   return await this.userEntity.getUserDetails({ _id: userId });
   }
   async profileDetails(payload: UserSession) {
-    const result = await this.clientEntity.getUserDetails({ _id: payload.userId });
+    const result = await this.userEntity.getUserDetails({ _id: payload.userId });
     return [
       RESPONSE_DATA.PROFILE,
       {
@@ -97,7 +97,7 @@ export class ClientOnBoardingService {
   }
 
   async login(loginDto: LoginDto) {
-    const checkUser: UserDetails = await this.clientEntity.getUserDetails({ mobileNo: loginDto.mobileNo });
+    const checkUser: UserDetails = await this.userEntity.getUserDetails({ mobileNo: loginDto.mobileNo });
     if (!checkUser) throw new BadRequestException(RESPONSE_MSG.USER_NOT_EXIST);
     if (checkUser.password !== this.guardService.hashData(loginDto.password, CONSTANT.PASSWORD_HASH_SALT))
       throw new BadRequestException(RESPONSE_MSG.INVALID_PASSWORD);
@@ -128,7 +128,7 @@ export class ClientOnBoardingService {
 
   async getUserSavedCard(payload: UserSession) {
 		try {
-			const userDetails = await this.clientEntity.getUserDetails({ _id: payload.userId });
+			const userDetails = await this.userEntity.getUserDetails({ _id: payload.userId });
 			const cardList = await this.getTapCardsList(userDetails.tapId);
       return [
         RESPONSE_DATA.PROFILE,

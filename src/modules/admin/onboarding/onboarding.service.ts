@@ -2,7 +2,6 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { ENUM } from 'src/common/enum';
 import { AdminEntity } from 'src/entity/admin.entity';
-import { ClientEntity } from 'src/entity/client.entity';
 import { GuardService } from 'src/guards/guards.service';
 import { AdminLoginDto } from './dto/create-onboarding.dto';
 import { CONSTANT } from 'src/common/constant';
@@ -13,7 +12,6 @@ import { AdminSessionEntity } from 'src/entity/adminSession.entity';
 export class OnboardingService {
   httpResponse: any;
   constructor(
-    private readonly clientEntity: ClientEntity,
     private readonly adminEntity: AdminEntity,
     private readonly guardService: GuardService,
     private readonly configService: ConfigService,

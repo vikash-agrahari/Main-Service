@@ -6,12 +6,12 @@ import { GuardModule } from 'src/guards/guards.module';
 import { GuardService } from 'src/guards/guards.service';
 import { HttpResponse } from 'src/common/httpResponse';
 import { OrderController } from './order.controller';
-import { ClientOnBoardingService } from 'src/modules/client/on-boarding/on-boarding.service';
+import { UserOnBoardingService } from 'src/modules/user/on-boarding/on-boarding.service';
 import { TransactionService } from '../transaction/transaction.service';
 
 @Module({
   imports: [ConfigModule.forRoot(),EntityModule, GuardModule],
   controllers: [OrderController],
-  providers: [OrderService,GuardService, ClientOnBoardingService,TransactionService,HttpResponse],
+  providers: [OrderService,GuardService, UserOnBoardingService,TransactionService,HttpResponse],
 })
 export class OrderModule {}

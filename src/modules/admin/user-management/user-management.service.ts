@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { ENUM } from 'src/common/enum';
-import { ClientEntity } from 'src/entity/client.entity';
+import { UserEntity } from 'src/entity/user.entity';
 import { ClientListing } from './interface/client-management.interface';
 import { ClientListingDto } from './dto/create-client-management.dto';
 
 @Injectable()
-export class ClientManagementService {
-  constructor(private readonly clientEntity: ClientEntity) {}
+export class UserManagementService {
+  constructor(private readonly userEntity: UserEntity) {}
 
   async clientListing(clientListingDto: ClientListingDto) {
     const options: ClientListing = clientListingDto;
@@ -39,7 +39,7 @@ export class ClientManagementService {
     if (matchCondition.length) pipeline.push({ $match: { $and: matchCondition } });
      pipeline.push({ $sort: { createdAt: -1 } });
     options.getCount = true;
-    return await this.clientEntity.listing(pipeline, options);
+    return await this.userEntity.listing(pipeline, options);
   }
 
 

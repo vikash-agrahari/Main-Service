@@ -2,7 +2,7 @@ import * as mongoose from 'mongoose';
 import { Schema } from 'mongoose';
 import { ENUM } from 'src/common/enum';
 
-export interface IClient extends Document {
+export interface IUser extends Document {
   firstName: string;
   lastName: string;
   email: string;
@@ -11,7 +11,7 @@ export interface IClient extends Document {
 }
 
 
-export const ClientSchema = new mongoose.Schema(
+export const UserSchema = new mongoose.Schema(
   {
     firstName: { type: Schema.Types.String, required: true },
     lastName: { type: Schema.Types.String, required: true },
@@ -23,6 +23,6 @@ export const ClientSchema = new mongoose.Schema(
   {
     versionKey: false,
     timestamps: true,
-    collection: ENUM.COLLECTIONS.CLIENT,
+    collection: ENUM.COLLECTIONS.USER,
   },
 );
