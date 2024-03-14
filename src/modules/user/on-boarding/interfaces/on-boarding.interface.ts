@@ -1,5 +1,5 @@
-export interface CreateClientSession {
-  clientId: string;
+export interface CreateUserSession {
+  userId: string;
   ipAddress?: string;
   status?: number;
   deviceToken?: string;

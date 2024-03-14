@@ -13,7 +13,7 @@ export interface IUserSession extends Document {
 
 export const UserSessionSchema = new Schema(
   {
-    clientId: { type: SchemaTypes.ObjectId, required: true, index: true, ref: ENUM.COLLECTIONS.USER },
+    userId: { type: SchemaTypes.ObjectId, required: true, index: true, ref: ENUM.COLLECTIONS.USER },
     status: { type: SchemaTypes.Number, default: ENUM.USER_PROFILE_STATUS.ACTIVE },
   },
   {
