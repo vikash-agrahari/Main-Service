@@ -6,7 +6,7 @@ interface JWTParams {
   type: string;
   sessionId: string;
   adminId?: string;
-  clientId?: string;
+  userId?: string;
 }
 
 @Injectable()

@@ -8,14 +8,6 @@ export const CONSTANT = {
 };
 export const contentType = 'application/json';
 
-export const TAP_CONSTANT = {
-  contentType: 'application/json',
-  USER_CREATE_URL: 'https://api.tap.company/v2/customers',
-  CHARGE_URL: 'https://api.tap.company/v2/charges',
-  CREATE_TOKEN_URL: 'https://api.tap.company/v2/tokens',
-};
-
-
 export const Swagger = {
   Title: 'Swagger Title',
   Description: 'A Documentation for Nest.js Boilerplate APIs',

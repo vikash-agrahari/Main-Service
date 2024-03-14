@@ -53,10 +53,10 @@ export class JwtUserStrategy extends PassportStrategy(Strategy, 'userJWT') {
     });
   }
 
-  async validate(payload: { clientId: string; sessionId: string }) {
+  async validate(payload: { userId: string; sessionId: string }) {
     if (payload) {
       const [userData, sessionData] = await Promise.all([
-        this.userEntity.findOne({ _id: payload.clientId }),
+        this.userEntity.findOne({ _id: payload.userId }),
         this.userSessionEntity.findOne({ _id: payload.sessionId, status: ENUM.USER_PROFILE_STATUS.ACTIVE }),
       ]);
       if (!sessionData) throw new UnauthorizedException(RESPONSE_MSG.SESSION_EXPIRED);
@@ -66,7 +66,7 @@ export class JwtUserStrategy extends PassportStrategy(Strategy, 'userJWT') {
         console.log('*******************   Session Validation End For User ******************************');
         const sessionUser = {
           sessionId: payload.sessionId,
-          userId: payload.clientId,
+          userId: payload.userId,
           userData:userData ,
         };
         return sessionUser;

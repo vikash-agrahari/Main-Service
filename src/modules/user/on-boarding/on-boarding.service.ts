@@ -4,9 +4,8 @@ import { CreateOnboardingDto, LoginDto } from './dto/on-boarding.dto';
 import { ENUM } from 'src/common/enum';
 import { RESPONSE_DATA, RESPONSE_MSG } from 'src/common/responses';
 import { GuardService } from 'src/guards/guards.service';
-import { CONSTANT, TAP_CONSTANT } from 'src/common/constant';
-import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
-import { CreateClientSession, UserDetails, UserSession, UpdateTapUSer } from './interfaces/on-boarding.interface';
+import { CONSTANT } from 'src/common/constant';
+import { CreateUserSession, UserDetails, UserSession, UpdateTapUSer } from './interfaces/on-boarding.interface';
 import { UserSessionEntity } from 'src/entity/userSession.entity';
 import { ConfigService } from '@nestjs/config';
 
@@ -25,8 +24,8 @@ export class UserOnBoardingService {
         createOnboardingDto.password,
         CONSTANT.PASSWORD_HASH_SALT,
       );
-      const createClient = Object.assign(createOnboardingDto);
-      const data = await this.userEntity.create(createClient);
+      const userClient = Object.assign(createOnboardingDto);
+      const data = await this.userEntity.create(userClient);
       return [RESPONSE_DATA.SUCCESS, { id: data._id }];
     } catch (error) {
       console.log('Error in signUp:---------->', error);
@@ -56,23 +55,23 @@ export class UserOnBoardingService {
     if (checkUser.blockedStatus == ENUM.USER_PROFILE_STATUS.BLOCKED) throw new ForbiddenException(RESPONSE_MSG.ACCOUNT_BLOCKED);
     if (checkUser.status == ENUM.USER_PROFILE_STATUS.DELETED) throw new BadRequestException(RESPONSE_MSG.USER_NOT_EXIST);
 
-    await this.userSessionEntity.deleteUserSession({ clientId: checkUser._id });
+    await this.userSessionEntity.deleteUserSession({ userId: checkUser._id });
 
-    const payload: CreateClientSession = {
-      clientId: checkUser?._id,
+    const payload: CreateUserSession = {
+      userId: checkUser?._id,
       status: ENUM.USER_PROFILE_STATUS.ACTIVE
     };
     const sessionData = await this.userSessionEntity.createUserSession(payload);
     const token = await this.guardService.jwtTokenGeneration({
       type: 'USER_LOGIN',
       sessionId: sessionData.id,
-      clientId: checkUser._id,
+      userId: checkUser._id,
     });
     return [
       RESPONSE_DATA.LOGIN,
       {
         token: token,
-        clientId: checkUser._id,
+        userId: checkUser._id,
       },
     ];
   }
