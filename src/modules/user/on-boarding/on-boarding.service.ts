@@ -13,7 +13,7 @@ import { CreateUserSession, UserDetails, UserSession, UpdateTapUSer } from './in
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { UserSessionEntity } from 'src/entity/userSession.entity';
 import { ConfigService } from '@nestjs/config';
-import { producer } from 'kafka/kafka.producer';
+import { producer } from 'src/providers/kafka/kafka.producer';
 import appConfig from 'config/configuration';
 import { KAFKA_CONFIG } from 'src/interfaces/kafka.config.interface';
 import { Message } from 'kafkajs';

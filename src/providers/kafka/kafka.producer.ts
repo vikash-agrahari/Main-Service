@@ -1,7 +1,7 @@
 import { Message } from 'kafkajs';
 import { IProducer } from 'src/interfaces/kafka.interface';
 import { KafkaProducer } from './producer.kafka';
-import {CHANNEL_TYPE} from "../src/interfaces/common.interface"
+import {CHANNEL_TYPE} from "../../interfaces/common.interface"
 import { KAFKA_CONFIG } from 'src/interfaces/kafka.config.interface';
 
 class ProducerService {

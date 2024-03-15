@@ -8,7 +8,7 @@ import { AllExceptionsFilter } from './filters/exceptionFilter';
 import { LoggerMiddleware } from './middlewares/logging.middleware';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { Swagger } from './common/constant';
-import { KafkaService } from 'kafka/kafka';
+import { KafkaService } from 'src/providers/kafka/kafka';
 
 
 
