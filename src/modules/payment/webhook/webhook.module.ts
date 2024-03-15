@@ -9,11 +9,12 @@ import { WebhookController } from './webhook.controller';
 import { TransactionService } from '../transaction/transaction.service';
 import { OrderService } from '../order/order.service';
 import { UserOnBoardingService } from 'src/modules/user/on-boarding/on-boarding.service';
+import { FirebaseService } from 'src/providers/firebase/firebase.service';
 
 
 @Module({
   imports: [ConfigModule.forRoot(),EntityModule, GuardModule],
   controllers: [WebhookController],
-  providers: [WebhookService,TransactionService,OrderService,UserOnBoardingService, GuardService, HttpResponse],
+  providers: [WebhookService,TransactionService,OrderService,UserOnBoardingService, GuardService, HttpResponse,FirebaseService],
 })
 export class WebhookModule {}

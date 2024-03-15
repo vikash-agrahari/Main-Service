@@ -22,4 +22,8 @@ export class UserEntity extends Dao {
   async listing(pipeline: any, params: any) {
     return await this.paginateAggregate(pipeline, params);
   }
+  async getUserByEmail(email: string) {
+    const data = await this.findOne({email: email});
+    return data;
+  }
 }

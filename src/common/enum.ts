@@ -49,5 +49,11 @@ export const ENUM = {
     FEMALE: 1,
     MALE: 2,
     Other: 3
+  },
+
+  LOGIN_TYPE:{
+    GOOGLE: 2,
+    PHONE: 3,
+    EMAIL: 1,
   }
 };
