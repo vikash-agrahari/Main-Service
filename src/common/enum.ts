@@ -55,5 +55,11 @@ export const ENUM = {
     GOOGLE: 2,
     PHONE: 3,
     EMAIL: 1,
-  }
+  },
+
+  CHANNEL_TYPE: {
+    PUSH: 'PUSH',
+    EMAIL: 'EMAIL',
+  },
 };
+

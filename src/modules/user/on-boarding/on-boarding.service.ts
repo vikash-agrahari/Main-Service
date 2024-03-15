@@ -18,6 +18,9 @@ import {
 import { UserSessionEntity } from 'src/entity/userSession.entity';
 import { ConfigService } from '@nestjs/config';
 import { FirebaseService } from 'src/providers/firebase/firebase.service';
+import { Message } from 'kafkajs';
+import { producer } from 'src/providers/kafka/kafka.producer';
+import { KAFKA_CONFIG } from 'src/interfaces/kafka.config.interface';
 
 @Injectable()
 export class UserOnBoardingService {
@@ -158,6 +161,17 @@ export class UserOnBoardingService {
       sessionId: sessionData.id,
       userId: checkUser._id,
     });
+
+    const message: Message = {
+      value: Buffer.from(
+        JSON.stringify({
+          message: `User ${checkUser._id} logged in successfully`,
+          channel: ENUM.CHANNEL_TYPE.EMAIL
+        }),
+      ),
+    };
+    await producer.produce(KAFKA_CONFIG.TOPICS.KAFKA_EVENTS.topic,message);
+    console.log('message published successfully');
     return [
       RESPONSE_DATA.LOGIN,
       {
