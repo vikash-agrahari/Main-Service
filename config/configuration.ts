@@ -10,5 +10,5 @@ export default () => ({
   ENV: process.env.NODE_ENV,
   DB_URL: process.env.URI,
   DB_Name: process.env.DB_NAME,
-  TAP_SECRET:process.env.TAP_SECRET,
+  FIREBASE_CONFIG: process.env.FIREBASE_CONFIG,
 });

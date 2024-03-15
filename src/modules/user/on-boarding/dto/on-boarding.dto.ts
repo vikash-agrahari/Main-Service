@@ -1,51 +1,56 @@
-import { IsEmail, IsNotEmpty, IsNumber, IsString, Length, MaxLength, MinLength } from 'class-validator';
+import {
+  IsEmail,
+  IsEnum,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+  Length,
+  MaxLength,
+  MinLength,
+} from 'class-validator';
 import { Transform } from 'class-transformer';
-import { ApiHideProperty, ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import {
+  ApiHideProperty,
+  ApiProperty,
+  ApiPropertyOptional,
+} from '@nestjs/swagger';
+import { ENUM } from 'src/common/enum';
 
 export class CreateOnboardingDto {
+  @ApiProperty()
+  @IsString()
+  @IsOptional()
+  idToken: string;
 
   @ApiProperty()
-  @IsNotEmpty()
   @IsString()
-  firstName: string;
-
-
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsString()
-  lastName: string;
-
-
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsString()
-  @MinLength(8)
-  @MaxLength(16)
-  password: string;
-
-  @ApiPropertyOptional()
-  @IsString()
-  @IsEmail()
-  @IsNotEmpty()
-  @Transform((param) => param.value.toLowerCase())
+  @Transform(({ value }) => value.toLowerCase())
   email: string;
 
   @ApiProperty()
   @IsString()
-  @IsNotEmpty()
-  @Length(10, 10)
-  mobileNo: string;
+  fullName: string;
 
+  @ApiProperty()
+  @IsString()
+  password: string;
 }
 
 export class LoginDto {
-  @ApiPropertyOptional()
+  @ApiProperty()
   @IsString()
-  @IsNotEmpty()
-  mobileNo?: string;
+  @IsOptional()
+  idToken: string;
 
   @ApiProperty()
-  @IsNotEmpty()
+  @IsOptional()
+  @IsString()
+  @Transform(({ value }) => value.toLowerCase())
+  email: string;
+
+  @ApiProperty()
+  @IsOptional()
   @IsString()
   password: string;
 }

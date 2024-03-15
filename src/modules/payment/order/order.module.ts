@@ -8,10 +8,11 @@ import { HttpResponse } from 'src/common/httpResponse';
 import { OrderController } from './order.controller';
 import { UserOnBoardingService } from 'src/modules/user/on-boarding/on-boarding.service';
 import { TransactionService } from '../transaction/transaction.service';
+import { FirebaseService } from 'src/providers/firebase/firebase.service';
 
 @Module({
   imports: [ConfigModule.forRoot(),EntityModule, GuardModule],
   controllers: [OrderController],
-  providers: [OrderService,GuardService, UserOnBoardingService,TransactionService,HttpResponse],
+  providers: [OrderService,GuardService, UserOnBoardingService,TransactionService,HttpResponse, FirebaseService],
 })
 export class OrderModule {}
