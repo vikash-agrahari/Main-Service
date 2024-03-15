@@ -15,6 +15,7 @@ import { OnboardingModule } from './modules/admin/onboarding/onboarding.module';
 import { UserManagementModule } from './modules/admin/user-management/user-management.module';
 import { OrderModule } from './modules/payment/order/order.module';
 import { OrderManagementModule } from './modules/admin/order-management/order-management.module';
+import { FirebaseModule } from './providers/firebase/firebase.module';
 
 
 //for routing admin and app path separately
@@ -88,7 +89,8 @@ const routes: Routes = [
     WebhookModule,
     OnboardingModule,
     UserManagementModule,
-    OrderManagementModule
+    OrderManagementModule,
+    FirebaseModule
   ],
   providers: [
     ...schemaProviders,

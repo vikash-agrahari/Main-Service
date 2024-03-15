@@ -10,6 +10,7 @@ export const APP_CONSTANTS = {
   env: {
     NODE_ENV: process.env.NODE_ENV,
         PORT: process.env.PORT,
+        FIREBASE_CONFIG: process.env.FIREBASE_CONFIG,
         DB_URL: process.env.DEV_DB_URL,
         KAFKA_BROKER_1: process.env.KAFKA_BROKER_1 || 'BROKER_1',
         KAFKA_BROKER_2: process.env.KAFKA_BROKER_2 || 'BROKER 2',
@@ -28,6 +29,7 @@ switch (process.env.NODE_ENV) {
       env: {
         NODE_ENV: process.env.NODE_ENV,
         PORT: process.env.PORT,
+        FIREBASE_CONFIG: process.env.FIREBASE_CONFIG,
         DB_URL: process.env.DEV_DB_URL,
         KAFKA_BROKER_1: process.env.KAFKA_BROKER_1 || 'BROKER_1',
         KAFKA_BROKER_2: process.env.KAFKA_BROKER_2 || 'BROKER 2',
@@ -47,6 +49,7 @@ switch (process.env.NODE_ENV) {
     appConfig = {
       env: {
         NODE_ENV: process.env.NODE_ENV,
+        FIREBASE_CONFIG: process.env.FIREBASE_CONFIG,
         PORT: process.env.PORT,
         DB_URL: process.env.DEV_DB_URL,
         KAFKA_BROKER_1: process.env.KAFKA_BROKER_1 || 'BROKER_1',
@@ -67,6 +70,7 @@ switch (process.env.NODE_ENV) {
       env: {
         NODE_ENV: process.env.NODE_ENV,
         PORT: process.env.PORT,
+        FIREBASE_CONFIG: process.env.FIREBASE_CONFIG,
         DB_URL: process.env.DEV_DB_URL,
         KAFKA_BROKER_1: process.env.KAFKA_BROKER_1 || 'BROKER_1',
         KAFKA_BROKER_2: process.env.KAFKA_BROKER_2 || 'BROKER 2',

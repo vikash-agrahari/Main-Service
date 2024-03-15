@@ -1,8 +1,11 @@
+import { IFirebaseData } from "src/schema/userSession.schema";
+
 export interface CreateUserSession {
   userId: string;
   ipAddress?: string;
   status?: number;
   deviceToken?: string;
+  firebaseData?: IFirebaseData;
 }
 
 export interface UserDetails {
