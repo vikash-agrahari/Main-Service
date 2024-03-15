@@ -12,3 +12,6 @@ logs/
 
 #ssl 
 src/ssl/*
+
+
+firebase.dev.json
