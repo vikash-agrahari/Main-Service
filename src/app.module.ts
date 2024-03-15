@@ -77,7 +77,7 @@ const routes: Routes = [
 ];
 @Module({
   imports: [
-    ConfigModule.forRoot({ load: [configuration], isGlobal: true }),
+    ConfigModule.forRoot({ load: [], isGlobal: true }),
     ScheduleModule.forRoot(),
     DatabaseModule,
     LoggerModule,
