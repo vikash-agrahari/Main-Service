@@ -15,7 +15,7 @@ export class OrderManagementService {
     pipeline.push({
       $project: {
         _id: '$_id',
-        clientId: '$clientId',
+        userId: '$userId',
         orderId: '$orderId',
         productId: '$productId',
         transactionId: '$transactionId',

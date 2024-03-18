@@ -3,7 +3,7 @@ import { Type } from 'class-transformer';
 import { IsDateString, IsEnum, IsNotEmpty, IsNumber, IsOptional, IsString, ValidateIf } from 'class-validator';
 import { ENUM } from 'src/common/enum';
 
-export class ClientListingDto {
+export class UserListingDto {
   @ApiProperty()
   @IsNumber()
   @IsNotEmpty()
@@ -23,10 +23,10 @@ export class ClientListingDto {
 
 
 
-export class BasicClientDetailsDto {
+export class BasicUserDetailsDto {
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
-  clientId: string;
+  userId: string;
 }
 

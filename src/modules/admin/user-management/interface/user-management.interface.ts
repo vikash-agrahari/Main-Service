@@ -1,4 +1,4 @@
-export interface ClientListing {
+export interface UserListing {
   limit: number;
   page: number;
   search?: string;
