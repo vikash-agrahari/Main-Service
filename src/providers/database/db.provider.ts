@@ -41,7 +41,7 @@ export const databaseProviders = [
       });
 
       return mongoose.connect(
-        config.get('DB_URL') || 'mongodb+srv://vikashagrahari:j2E4QWs74OIlxk8h@cluster0.w5jfqek.mongodb.net/Main-Service',
+        config.get('DB_URL') || '',
       );
     },
     inject: [ConfigService],

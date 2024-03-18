@@ -1,14 +1,11 @@
-import appConfig from "config/configuration";
+import { KAFKA_CONSTANT } from "../common/kafka.constant";
 export const KAFKA_CONFIG = {
     TOPICS: {
         KAFKA_EVENTS: {
-            topic: appConfig.env.KAFKA_TOPIC_PRODUCER ||"",
-            numPartitions: appConfig.env.KAFKA_PARTITION,
-            replicationFactor: appConfig.env.KAFKA_REPLICATION,
+            topic: KAFKA_CONSTANT.KAFKA_TOPIC_PRODUCER,
+            numPartitions: KAFKA_CONSTANT.KAFKA_PARTITION,
+            replicationFactor: KAFKA_CONSTANT.KAFKA_REPLICATION,
         },
     },
 };
-export const Config = {
-    KAFKA_HOST_1: appConfig.env.KAFKA_HOST,
-    KAFKA_PORT_1: appConfig.env.KAFKA_PORT, 
-};
+

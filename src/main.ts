@@ -8,7 +8,7 @@ import { AllExceptionsFilter } from './filters/exceptionFilter';
 import { LoggerMiddleware } from './middlewares/logging.middleware';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { Swagger } from './common/constant';
-import { KafkaService } from 'src/providers/kafka/kafka';
+import { KafkaManager } from 'src/providers/kafka/kafka';
 
 
 
@@ -69,7 +69,7 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup(Swagger.Path, app, document);
 
-  await KafkaService.connectToAdmin()
+  await new KafkaManager().connectToAdmin()
 
   // Start the NestJS application
   await app.listen(nestPort);
