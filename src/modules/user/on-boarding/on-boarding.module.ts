@@ -8,10 +8,12 @@ import { HttpResponse } from 'src/common/httpResponse';
 import { UserOnBoardingController } from './on-boarding.controller';
 import { FirebaseService } from 'src/providers/firebase/firebase.service';
 import { FirebaseModule } from 'src/providers/firebase/firebase.module';
+import { kafkaModule } from 'src/providers/kafka/kafka.module';
+import { KafkaService } from 'src/providers/kafka/kafka.service';
 
 @Module({
-  imports: [ConfigModule.forRoot(),EntityModule, GuardModule, FirebaseModule],
+  imports: [ConfigModule.forRoot(),EntityModule, GuardModule, FirebaseModule, kafkaModule],
   controllers: [UserOnBoardingController],
-  providers: [UserOnBoardingService, GuardService, HttpResponse,FirebaseService],
+  providers: [UserOnBoardingService, GuardService, HttpResponse,FirebaseService, KafkaService],
 })
 export class UserOnBoardingModule {}

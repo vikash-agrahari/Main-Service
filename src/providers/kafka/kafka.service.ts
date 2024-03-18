@@ -4,7 +4,7 @@ import { KafkaProducer } from './producer.kafka';
 import {CHANNEL_TYPE} from "../../interfaces/common.interface"
 import { KAFKA_CONFIG } from 'src/interfaces/kafka.config.interface';
 
-class ProducerService {
+export class KafkaService {
     private readonly producers = new Map<string, IProducer>();
 
     /**
@@ -56,4 +56,3 @@ class ProducerService {
 
 }
 
-export const producer = new ProducerService();

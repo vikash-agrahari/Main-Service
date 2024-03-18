@@ -16,6 +16,7 @@ import { UserManagementModule } from './modules/admin/user-management/user-manag
 import { OrderModule } from './modules/payment/order/order.module';
 import { OrderManagementModule } from './modules/admin/order-management/order-management.module';
 import { FirebaseModule } from './providers/firebase/firebase.module';
+import { kafkaModule } from './providers/kafka/kafka.module';
 
 
 //for routing admin and app path separately
@@ -78,7 +79,7 @@ const routes: Routes = [
 ];
 @Module({
   imports: [
-    ConfigModule.forRoot({ load: [], isGlobal: true }),
+    ConfigModule.forRoot({ load: [configuration], isGlobal: true }),
     ScheduleModule.forRoot(),
     DatabaseModule,
     LoggerModule,
@@ -90,7 +91,8 @@ const routes: Routes = [
     OnboardingModule,
     UserManagementModule,
     OrderManagementModule,
-    FirebaseModule
+    FirebaseModule,
+    kafkaModule,
   ],
   providers: [
     ...schemaProviders,

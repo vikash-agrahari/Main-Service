@@ -19,8 +19,8 @@ import { UserSessionEntity } from 'src/entity/userSession.entity';
 import { ConfigService } from '@nestjs/config';
 import { FirebaseService } from 'src/providers/firebase/firebase.service';
 import { Message } from 'kafkajs';
-import { producer } from 'src/providers/kafka/kafka.producer';
 import { KAFKA_CONFIG } from 'src/interfaces/kafka.config.interface';
+import { KafkaService } from 'src/providers/kafka/kafka.service';
 
 @Injectable()
 export class UserOnBoardingService {
@@ -30,6 +30,7 @@ export class UserOnBoardingService {
     private readonly userSessionEntity: UserSessionEntity,
     private config: ConfigService,
     private readonly firebaseService: FirebaseService,
+    private readonly kafkaService: KafkaService
   ) {}
 
   async signUpFirebase(createOnboardingDto: CreateOnboardingDto) {
@@ -170,7 +171,7 @@ export class UserOnBoardingService {
         }),
       ),
     };
-    await producer.produce(KAFKA_CONFIG.TOPICS.KAFKA_EVENTS.topic,message);
+    await this.kafkaService.produce(KAFKA_CONFIG.TOPICS.KAFKA_EVENTS.topic,message);
     console.log('message published successfully');
     return [
       RESPONSE_DATA.LOGIN,

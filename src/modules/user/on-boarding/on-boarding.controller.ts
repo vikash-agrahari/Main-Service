@@ -52,9 +52,9 @@ export class UserOnBoardingController {
    */
 
   @Post('/login')
-  // @ApiOperation({ summary: 'Login api' })
-  // @ApiBasicAuth()
-  // @UseGuards(AuthGuard('basic'))
+  @ApiOperation({ summary: 'Login api' })
+  @ApiBasicAuth()
+  @UseGuards(AuthGuard('basic'))
   async login(@Body() loginDto: LoginDto, @Res() response: Response) {
     const [status, result] = await this.userOnBoardingService.login(loginDto);
     return this.httpResponse.sendResponse(response, status, result);

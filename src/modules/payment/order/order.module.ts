@@ -9,10 +9,11 @@ import { OrderController } from './order.controller';
 import { UserOnBoardingService } from 'src/modules/user/on-boarding/on-boarding.service';
 import { TransactionService } from '../transaction/transaction.service';
 import { FirebaseService } from 'src/providers/firebase/firebase.service';
+import { KafkaService } from 'src/providers/kafka/kafka.service';
 
 @Module({
   imports: [ConfigModule.forRoot(),EntityModule, GuardModule],
   controllers: [OrderController],
-  providers: [OrderService,GuardService, UserOnBoardingService,TransactionService,HttpResponse, FirebaseService],
+  providers: [OrderService,GuardService, UserOnBoardingService,TransactionService,HttpResponse, FirebaseService, KafkaService],
 })
 export class OrderModule {}
