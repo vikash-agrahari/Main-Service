@@ -1,11 +1,11 @@
-import appConfig from 'config/configuration';
+import { ConfigService } from '@nestjs/config';
 import { Kafka, Admin, KafkaConfig, ITopicConfig } from 'kafkajs';
 import { Config,KAFKA_CONFIG } from 'src/interfaces/kafka.config.interface';
 
  export class KafkaManager {
     protected kafka: Kafka;
     private admin: Admin;
-    constructor() {
+    constructor(private readonly config: ConfigService) {
         this.kafka = new Kafka(this.getConfiguration());
 
         this.admin = this.kafka.admin();
@@ -16,10 +16,14 @@ import { Config,KAFKA_CONFIG } from 'src/interfaces/kafka.config.interface';
      * @returns {KafkaConfig}
      */
     getConfiguration(): KafkaConfig {
-        const broker = `${Config.KAFKA_HOST_1}:${Config.KAFKA_PORT_1}`;
+        const kafkaHost = this.config.get<string>('KAFKA_HOST');
+        const kafkaPort = this.config.get<string>('KAFKA_PORT');
+
+
+        const broker = `${kafkaHost}:${kafkaPort}`;
 
         const creds: KafkaConfig = {
-            clientId: appConfig.env.KAFKA_CLIENT_ID,
+            clientId: this.config.get<string>('KAFKA_CLIENT_ID'),
             brokers: [broker],
             retry: {},
         };
