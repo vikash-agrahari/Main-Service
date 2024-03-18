@@ -8,7 +8,7 @@ config({ path: `bin/.env.${env}` });
 export default () => ({
   PORT: process.env.PORT,
   ENV: process.env.NODE_ENV,
-  DB_URL: process.env.URI,
+  DB_URL: process.env.MONGO_URI,
   DB_Name: process.env.DB_NAME,
   KAFKA_BROKER_1: process.env.KAFKA_BROKER_1 || 'BROKER_1',
   KAFKA_BROKER_2: process.env.KAFKA_BROKER_2 || 'BROKER 2',

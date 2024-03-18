@@ -6,7 +6,7 @@ export class KafkaManager {
   protected kafka: Kafka;
   private admin: Admin;
   private readonly config: ConfigService
-  constructor(
+  constructor(  
     ) {
     this.kafka = new Kafka(this.getConfiguration());
 
@@ -18,13 +18,13 @@ export class KafkaManager {
    * @returns {KafkaConfig}
    */
   getConfiguration(): KafkaConfig {
-    const kafkaHost: any = this.config.get<any>('KAFKA_HOST');
-    const kafkaPort = this.config.get<string>('KAFKA_PORT');
+    const kafkaHost="localhost";
+    const kafkaPort=9092;
 
     const broker = `${kafkaHost}:${kafkaPort}`;
 
     const creds: KafkaConfig = {
-      clientId: this.config.get<string>('KAFKA_CLIENT_ID'),
+      clientId: 'KAFKA_CLIENT_ID',
       brokers: [broker],
       retry: {},
     };
