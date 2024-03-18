@@ -5,6 +5,9 @@ export const CONSTANT = {
   BASIC_USERNAME: 'XYZ',
   PASSWORD_HASH_SALT: 'D4XqxvRjf678LPYZAMNBOT7zkrqG3E2H',
   OTP_EXPIRE_TIME: 30,
+  PROTO_FILE_PATH: (protoFilename: string) => {
+    return `../../../../../proto-files/${protoFilename}`;
+  },
 };
 export const contentType = 'application/json';
 
@@ -19,4 +22,14 @@ export const Swagger = {
   },
   AuthType: 'basic',
   Path: 'swagger',
+};
+
+export const GRPC = {
+  PROTO_FILE_OPTIONS: {
+    keepCase: true,
+    longs: String,
+    enums: String,
+    defaults: true,
+    oneofs: true,
+  },
 };
