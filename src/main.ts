@@ -70,7 +70,7 @@ async function bootstrap() {
   SwaggerModule.setup(Swagger.Path, app, document);
 
   // await new KafkaManager().connectToAdmin()
-     await  KafkaService.connectToAdmin();
+    //  await  KafkaService.connectToAdmin();
   // Start the NestJS application
   await app.listen(nestPort);
   console.info(`Nest server listening on Port: ${nestPort}`);
