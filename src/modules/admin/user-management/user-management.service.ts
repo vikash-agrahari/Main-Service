@@ -1,25 +1,25 @@
 import { Injectable } from '@nestjs/common';
 import { ENUM } from 'src/common/enum';
 import { UserEntity } from 'src/entity/user.entity';
-import { ClientListing } from './interface/client-management.interface';
-import { ClientListingDto } from './dto/create-client-management.dto';
+import { UserListing } from './interface/user-management.interface';
+import { UserListingDto } from './dto/create-user-management.dto';
 
 @Injectable()
 export class UserManagementService {
   constructor(private readonly userEntity: UserEntity) {}
 
-  async clientListing(clientListingDto: ClientListingDto) {
-    const options: ClientListing = clientListingDto;
+  async clientListing(userListingDto: UserListingDto) {
+    const options: UserListing = userListingDto;
     const pipeline = [];
     const matchCondition = [];
     matchCondition.push({ status: { $ne: ENUM.USER_PROFILE_STATUS.DELETED } });
-    if (clientListingDto.search) {
-      const escapedSearchTerm = clientListingDto.search.replace(/[-[\]{}()*+!<=:?.\/\\^$|#\s,]/g, '\\+$&');
+    if (userListingDto.search) {
+      const escapedSearchTerm = userListingDto.search.replace(/[-[\]{}()*+!<=:?.\/\\^$|#\s,]/g, '\\+$&');
       matchCondition.push({
         $or: [
-          { firstName: { $regex: `.*${clientListingDto.search}.*`, $options: 'si' } },
-          { lastName: { $regex: `.*${clientListingDto.search}.*`, $options: 'si' } },
-          { email: { $regex: `.*${clientListingDto.search}.*`, $options: 'si' } },
+          { firstName: { $regex: `.*${userListingDto.search}.*`, $options: 'si' } },
+          { lastName: { $regex: `.*${userListingDto.search}.*`, $options: 'si' } },
+          { email: { $regex: `.*${userListingDto.search}.*`, $options: 'si' } },
           { mobileNo: { $regex: `.*${escapedSearchTerm}.*`, $options: 'si' } },
         ],
       });

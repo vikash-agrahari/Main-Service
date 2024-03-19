@@ -1,13 +1,15 @@
 import { IProducer } from 'src/interfaces/kafka.interface';
 import { Producer, Message } from 'kafkajs';
 import { KafkaManager } from './kafka';
+import configuration from 'config/configuration';
+import { ConfigService } from '@nestjs/config';
 
 export class KafkaProducer extends KafkaManager implements IProducer {
     private producer: Producer;
     private topic: string;
 
-    constructor(topic: string) {
-        super();
+    constructor(topic: string,configService: ConfigService<Record<string, unknown>,false>) {
+        super(configService);
         this.topic = topic;
         this.producer = this.kafka.producer({
             allowAutoTopicCreation: false,
