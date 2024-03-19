@@ -8,12 +8,13 @@ export const CONSTANT = {
   PROTO_FILE_PATH: (protoFilename: string) => {
     return `../../../../../proto-files/${protoFilename}`;
   },
+  BYPASS_OTP: '123456',
 };
 export const contentType = 'application/json';
 
 export const Swagger = {
   Title: 'Swagger Title',
-  Description: 'A Documentation for Nest.js Boilerplate APIs',
+  Description: 'A Documentation for Main Service APIs',
   Version: '1.0',
   AddApiKey: {
     Type: 'apiKey',
@@ -32,4 +33,11 @@ export const GRPC = {
     defaults: true,
     oneofs: true,
   },
+};
+
+export const VALIDATION_MSG = {
+  PASSWORD_SHORT: 'Password is too short. Minimal length is $constraint1 characters',
+  PASSWORD_LONG: 'Password is too long. Maximum length is $constraint1 characters',
+  PASSWORD_FORMAT: 'Password is too week. Please add one upper case letter, one lower case letter and one numeric digit.',
+  TIME_FORMAT: 'Time format does not match like 10:00 am',
 };

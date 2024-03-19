@@ -9,7 +9,7 @@ import {
 import { HttpResponse } from 'src/common/httpResponse';
 import { UserOnBoardingService } from './on-boarding.service';
 import { AuthGuard } from '@nestjs/passport';
-import { CreateOnboardingDto, LoginDto } from './dto/on-boarding.dto';
+import { CreateOnboardingDto, LoginDto, OtpDto } from './dto/on-boarding.dto';
 import { UserSession } from './interfaces/on-boarding.interface';
 import { JwtUserAuthGuard } from 'src/guards/jwt-auth.guard';
 
@@ -42,7 +42,15 @@ export class UserOnBoardingController {
     } catch (error) {
       throw error;
     }
+  }
 
+  @Post('/verify/otp')
+  @ApiOperation({ summary: 'verify otp' })
+  @ApiBasicAuth()
+  @UseGuards(AuthGuard('basic'))
+  async verifyOtp(@Body() otpDto: OtpDto,@Res() response: Response) {
+    const [status, result] = await this.userOnBoardingService.verifyOtp(otpDto);
+    return this.httpResponse.sendResponse(response, status, result);
   }
 
   /**
@@ -59,6 +67,7 @@ export class UserOnBoardingController {
     const [status, result] = await this.userOnBoardingService.login(loginDto);
     return this.httpResponse.sendResponse(response, status, result);
   }
+
 
    /**
    * @author TAP

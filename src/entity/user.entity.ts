@@ -26,4 +26,9 @@ export class UserEntity extends Dao {
     const data = await this.findOne({email: email});
     return data;
   }
+
+  async getUserById(userId: any){
+    const data = await this.findOne({_id: userId});
+    return data;
+  }
 }

@@ -24,6 +24,10 @@ export const RESPONSE_MSG = {
   EMAIL_NOT_EXIST: `Couldn't find any account associated with the email address.`,
   USER_EXIST: 'User already exists.',
   INVALID_PASSWORD: 'Enter a valid password.',
+  MOBILE_NO_ALREADY_EXIST: 'Entered Phone number is associated with another account.',
+  INVALID_OTP: 'Incorrect OTP.',
+  EXPIRE_OTP: 'OTP has expired. Please try generating a new one.',
+
 };
 
 export const RESPONSE_DATA = {
@@ -46,5 +50,13 @@ export const RESPONSE_DATA = {
   PROFILE: {
     statusCode: HttpStatus.OK,
     message: RESPONSE_MSG.PROFILE_DETAILS,
+  },
+  MOBILE_NO_ALREADY_EXIST: {
+    statusCode: HttpStatus.BAD_REQUEST,
+    message: RESPONSE_MSG.MOBILE_NO_ALREADY_EXIST,
+  },
+  VERIFY_OTP: {
+    statusCode: HttpStatus.OK,
+    message: RESPONSE_MSG.VERIFY_OTP,
   },
 };

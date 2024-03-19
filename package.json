@@ -32,6 +32,7 @@
     "moment": "^2.30.1",
     "mongoose": "^8.0.4",
     "nest-winston": "^1.9.4",
+    "nestjs-twilio": "^4.3.0",
     "npm": "^10.3.0",
     "passport-http": "^0.3.0",
     "passport-jwt": "^4.0.1",

@@ -39,6 +39,7 @@ export const ENUM = {
   
 
   USER_PROFILE_STATUS: {
+    INACTIVE: 0,
     ACTIVE: 1,
     BLOCKED: 4,
     DELETED: 3,
@@ -60,6 +61,19 @@ export const ENUM = {
   CHANNEL_TYPE: {
     PUSH: 'PUSH',
     EMAIL: 'EMAIL',
+  },
+
+  SMS: {
+    YOUR_OTP: (otp: string) => 'Your Verification OTP is ' + otp,
+  },
+
+  ENVIRONMENT: {
+    LOCAL: 'local',
+    DEVELOPMENT: 'dev',
+    QA: 'qa',
+    STAGING: 'stg',
+    PRE_PROD: 'pp',
+    PRODUCTION: 'prod',
   },
 };
 
