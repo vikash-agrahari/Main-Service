@@ -9,6 +9,7 @@ import { TwilioCommService } from './twilio.service';
       useFactory: (cfg: ConfigService) => ({
         accountSid: cfg.get('TWILIO_ACCOUNT_SID'),
         authToken: cfg.get('TWILIO_AUTH_TOKEN'),
+        username: cfg.get<string>('TWILIO_USERNAME'),
       }),
       inject: [ConfigService],
     }),

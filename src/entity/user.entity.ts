@@ -27,6 +27,10 @@ export class UserEntity extends Dao {
     return data;
   }
 
+  async updateUserDetails(_id: string, update: any) {
+    return await this.updateOne({ _id }, update);
+  }
+
   async getUserById(userId: any){
     const data = await this.findOne({_id: userId});
     return data;

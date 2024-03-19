@@ -21,5 +21,13 @@ export default () => ({
   FIREBASE_CONFIG: process.env.FIREBASE_CONFIG,
   TWILIO_ACCOUNT_SID: process.env.TWILIO_ACCOUNT_SID,
   TWILIO_AUTH_TOKEN: process.env.TWILIO_AUTH_TOKEN,
-  TWILIO_PHONE_NO: process.env.TWILIO_PHONE_NO
+  TWILIO_PHONE_NO: process.env.TWILIO_PHONE_NO,
+  EMAIL: process.env.EMAIL,
+  PASSWORD: process.env.PASSWORD,
+  HOST: process.env.HOST,
+  SECRET_KEY: process.env.SECRET_KEY,
+  ADMIN_EMAIL: process.env.ADMIN_EMAIL,
+  ADMIN_PASSWORD: process.env.ADMIN_PASSWORD,
+  ADMIN_NAME: process.env.ADMIN_NAME,
+  ADMIN_MOBILE_NO: process.env.ADMIN_MOBILE_NO
 });

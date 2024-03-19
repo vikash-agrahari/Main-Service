@@ -55,6 +55,7 @@ const routes: Routes = [
     FirebaseModule,
     kafkaModule,
     TwilioCommModule
+    // kafkaModule,
   ],
   providers: [
     ...schemaProviders,
@@ -62,8 +63,6 @@ const routes: Routes = [
       provide: APP_FILTER,
       useClass: AllExceptionsFilter,
     },
-    
-    
   ],
 })
 export class AppModule {}

@@ -19,6 +19,12 @@ export class AdminSessionEntity extends Dao {
   // }
 
   async delete(payload: any) {
-    return await this.deleteById(payload);
+    try{
+      return await this.deleteById(payload);
+    }
+    catch(error){
+      console.error("i got an error",error)
+      throw error ;
+    }
   }
 }

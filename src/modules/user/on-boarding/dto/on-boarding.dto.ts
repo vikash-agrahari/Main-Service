@@ -92,3 +92,45 @@ export class OtpDto extends ResendDto {
   @IsString()
   otp: string;
 }
+
+export class ForgotPasswordDto {
+  @ApiProperty()
+  @IsString()
+  @IsNotEmpty()
+  mobileNo?: string;
+}
+
+
+export class ForgotOtpDto {
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  userId?: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  otp: string;
+}
+
+
+export class ResetPasswordDto {
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  userId?: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  @MinLength(8, {
+    message: VALIDATION_MSG.PASSWORD_SHORT,
+  })
+  @MaxLength(16, {
+    message: VALIDATION_MSG.PASSWORD_LONG,
+  })
+  @Matches(/(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).*$/, {
+    message: VALIDATION_MSG.PASSWORD_FORMAT,
+  })
+  password: string;
+}
