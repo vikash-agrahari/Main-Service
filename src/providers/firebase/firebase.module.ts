@@ -11,10 +11,10 @@ import { EntityModule } from 'src/entity/entity.module';
   exports: [FirebaseService],
 })
 export class FirebaseModule {
-  // constructor(private readonly config : ConfigService) {
-  //   const firebaseKey:string = this.config.get<any>('FIREBASE_CONFIG') as string;
-  //   admin.initializeApp({
-  //     credential: admin.credential.cert(JSON.parse(firebaseKey)),
-  //   });
-  // }
+  constructor(private readonly config : ConfigService) {
+    const firebaseKey:string = this.config.get<any>('FIREBASE_CONFIG') as string;
+    admin.initializeApp({
+      credential: admin.credential.cert(JSON.parse(firebaseKey)),
+    });
+  }
 }

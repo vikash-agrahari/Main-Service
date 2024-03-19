@@ -92,7 +92,8 @@ const routes: Routes = [
     UserManagementModule,
     OrderManagementModule,
     FirebaseModule,
-    kafkaModule,
+    OnboardingModule,
+    // kafkaModule,
   ],
   providers: [
     ...schemaProviders,
@@ -100,8 +101,6 @@ const routes: Routes = [
       provide: APP_FILTER,
       useClass: AllExceptionsFilter,
     },
-    
-    
   ],
 })
 export class AppModule {}

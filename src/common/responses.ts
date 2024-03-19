@@ -15,7 +15,11 @@ export const RESPONSE_MSG = {
   USER_ALREADY_EXIST: 'Entered phone number and email is already associated with an account.',
   ACCOUNT_BLOCKED: 'Account has been temporarily blocked. Please contact with admin support.',
   SIGN_UP: 'Sign-up Successfully.',
+  LOGOUT: 'Logout successfully.',
+  INVALID_OTP: 'Incorrect OTP.',
+  EXPIRE_OTP: 'OTP has expired. Please try generating a new one.',
   LOGIN: 'Login Successfully.',
+  SAME_PASSWORD: `Password shouldn't be same as your previous password.`,
   SEND_OTP: 'OTP sent successfully.',
   VERIFY_OTP: 'OTP verified successfully.',
   PROFILE_DETAILS: 'Profile Details.',
@@ -38,6 +42,30 @@ export const RESPONSE_DATA = {
   USER_ALREADY_EXIST: {
     statusCode: HttpStatus.BAD_REQUEST,
     message: RESPONSE_MSG.USER_ALREADY_EXIST,
+  },
+  EMAIL_NOT_EXIST: {
+    statusCode: HttpStatus.BAD_REQUEST,
+    message: RESPONSE_MSG.EMAIL_NOT_EXIST,
+  },
+  EXPIRE_OTP: {
+    statusCode: HttpStatus.BAD_REQUEST,
+    message: RESPONSE_MSG.EXPIRE_OTP,
+  },
+  ADMIN_NOT_EXIST: {
+    statusCode: HttpStatus.BAD_REQUEST,
+    message: RESPONSE_MSG.USER_NOT_EXIST,
+  },
+  SAME_PASSWORD: {
+    statusCode: HttpStatus.BAD_REQUEST,
+    message: RESPONSE_MSG.SAME_PASSWORD,
+  },
+  LOGOUT: {
+    statusCode: HttpStatus.OK,
+    message: RESPONSE_MSG.LOGOUT,
+  },
+  PASSWORD_RESET: {
+    statusCode: HttpStatus.OK,
+    message: RESPONSE_MSG.PASSWORD_RESET,
   },
   LOGIN: {
     statusCode: HttpStatus.OK,

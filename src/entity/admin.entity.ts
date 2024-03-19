@@ -1,4 +1,4 @@
-import { Injectable, Inject } from '@nestjs/common';
+import { Injectable, Inject, BadRequestException } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { IAdmin } from 'src/schema/admin.schema';
 import { Dao } from 'src/providers/database/dao.provider';
@@ -25,6 +25,9 @@ export class AdminEntity extends Dao {
   }
 
   async updateAdminDetails(_id: string, update: any) {
+    if(!update.otp){
+      throw new BadRequestException('OTP is required for updating admin details');
+    }
     return await this.updateOne({ _id }, update);
   }
 }
