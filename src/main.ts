@@ -69,7 +69,6 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup(Swagger.Path, app, document);
 
-  // await new KafkaManager().connectToAdmin()
     //  await  KafkaService.connectToAdmin();
   // Start the NestJS application
   await app.listen(nestPort);

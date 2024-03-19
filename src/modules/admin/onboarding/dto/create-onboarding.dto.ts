@@ -2,6 +2,7 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsEmail, IsEnum, IsNotEmpty, IsNumber, IsOptional, IsString, Matches, MaxLength, MinLength } from 'class-validator';
 import { Transform } from 'class-transformer';
 import { ENUM } from 'src/common/enum';
+import { VALIDATION_MSG } from 'src/common/validationMessage';
 export class AdminCreateOnboardingDto {
   @ApiProperty()
   @IsNotEmpty()
@@ -57,15 +58,7 @@ export class AdminOtpDto {
   @IsString()
   adminId: string;
 
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsNumber()
-  type: number;
 }
-
-
-
-
 
 export class AdminUpdateProfileDto {
   @ApiPropertyOptional()
@@ -75,4 +68,36 @@ export class AdminUpdateProfileDto {
   title?: string;
 }
 
+export class AdminForgotPasswordDto {
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  email: string;
+
+  // @ApiProperty()
+  // @IsNotEmpty()
+  // @IsNumber()
+  // mobile_no: number;
+}
+
+export class AdminResetPasswordDto {
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  adminId: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  @MinLength(8, {
+    message: VALIDATION_MSG.PASSWORD_SHORT,
+  })
+  @MaxLength(16, {
+    message: VALIDATION_MSG.PASSWORD_LONG,
+  })
+  @Matches(/(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).*$/, {
+    message: VALIDATION_MSG.PASSWORD_FORMAT,
+  })
+  password: string;
+}
 

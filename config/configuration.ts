@@ -19,4 +19,12 @@ export default () => ({
   KAFKA_REPLICATION: process.env.KAFKA_REPLICATION,
   KAFKA_CLIENT_ID: process.env.KAFKA_CLIENT_ID,
   FIREBASE_CONFIG: process.env.FIREBASE_CONFIG,
+  EMAIL: process.env.EMAIL,
+  PASSWORD: process.env.PASSWORD,
+  HOST: process.env.HOST,
+  SECRET_KEY: process.env.SECRET_KEY,
+  ADMIN_EMAIL: process.env.ADMIN_EMAIL,
+  ADMIN_PASSWORD: process.env.ADMIN_PASSWORD,
+  ADMIN_NAME: process.env.ADMIN_NAME,
+  ADMIN_MOBILE_NO: process.env.ADMIN_MOBILE_NO
 });

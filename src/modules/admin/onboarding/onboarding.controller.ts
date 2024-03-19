@@ -1,8 +1,8 @@
-import { BadRequestException, Body, Controller, Get, Headers, Post, Put, Query, Req, Res, UseGuards } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, Headers, Next, Param, Post, Put, Query, Req, Res, UseFilters, UseGuards } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBasicAuth, ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { CONSTANT} from 'src/common/constant';
 import { ENUM } from 'src/common/enum';
 import { HttpResponse } from 'src/common/httpResponse';
@@ -13,11 +13,17 @@ import { GuardService } from 'src/guards/guards.service';
 import { JwtAdminAuthGuard } from 'src/guards/jwt-auth.guard';
 import {
   AdminCreateOnboardingDto,
+  AdminForgotPasswordDto,
   AdminLoginDto,
+  AdminOtpDto,
+  AdminResetPasswordDto,
   AdminUpdateProfileDto,
 } from './dto/create-onboarding.dto';
 import { CreateAdminSession, SessionAdmin } from './interface/onboarding.interface';
 import { OnboardingService } from './onboarding.service';
+import { verifyToken } from 'src/common/utils';
+import { AllExceptionsFilter } from 'src/filters/exceptionFilter';
+import { ApplicationErrorFilter } from 'src/filters/applicationFilter';
 
 @ApiTags('Admin : OnBoarding')
 @Controller('/')
@@ -26,8 +32,8 @@ export class OnboardingController {
     private readonly httpResponse: HttpResponse,
     private readonly guardService: GuardService,
     private readonly adminEntity: AdminEntity,
-    private readonly adminSessionEntity: AdminSessionEntity,
     private readonly configService: ConfigService,
+    private readonly adminSessionEntity: AdminSessionEntity,
     private readonly onboardingService: OnboardingService,
   ) {}
 
@@ -37,14 +43,14 @@ export class OnboardingController {
    * @Body createOnboardingDto
    */
 
-  @Post('/create')
-  @ApiOperation({ summary: ' add new api' })
-  async create(@Body() adminCreateOnboardingDto: AdminCreateOnboardingDto, @Res() response: Response) {
-    adminCreateOnboardingDto.email = adminCreateOnboardingDto.email.toLowerCase();
-    adminCreateOnboardingDto.password = this.guardService.hashData(adminCreateOnboardingDto.password, CONSTANT.PASSWORD_HASH_SALT);
-    await this.adminEntity.create(adminCreateOnboardingDto);
-    return this.httpResponse.sendResponse(response, RESPONSE_DATA.SUCCESS);
-  }
+  // @Post('/create')
+  // @ApiOperation({ summary: ' add new api' })
+  // async create(@Body() adminCreateOnboardingDto: AdminCreateOnboardingDto, @Res() response: Response) {
+  //   adminCreateOnboardingDto.email = adminCreateOnboardingDto.email.toLowerCase();
+  //   adminCreateOnboardingDto.password = this.guardService.hashData(adminCreateOnboardingDto.password, CONSTANT.PASSWORD_HASH_SALT);
+  //   await this.adminEntity.create(adminCreateOnboardingDto);
+  //   return this.httpResponse.sendResponse(response, RESPONSE_DATA.SUCCESS);
+  // }
 
   /**
    * @author TAP
@@ -93,9 +99,71 @@ export class OnboardingController {
     return this.httpResponse.sendResponse(res, RESPONSE_DATA.PROFILE, {});
   }
 
-  
+  /**
+   * @Description This function will used for Forgot password api for admin
+   * @param req
+   * @param res
+   * @returns
+   */
+  @Post('/forgot-password')
+  @UseGuards(AuthGuard('basic'))
+  async forgotPassword(@Body() adminForgotPasswordDto: AdminForgotPasswordDto, @Req() req:Request, @Res() res:Response) {
+    await this.onboardingService.forgotPassword(adminForgotPasswordDto);
+    return this.httpResponse.sendResponse(res, RESPONSE_DATA.SUCCESS,{});
+  }  
 
-  
+  /**
+   * @Description This function will used to verify the otp
+   * @param req
+   * @param res
+   * @returns
+   */
+  @Post('/otp/verify')
+  @UseFilters(ApplicationErrorFilter)
+  @UseGuards(AuthGuard('basic'))
+  async otpVerify(@Body() adminOtpDto:AdminOtpDto, @Req() req:Request, @Res() res:Response,@Next() next:NextFunction) {
+    try{
+      const token=await this.onboardingService.otpVerify(adminOtpDto);
+      console.log("token ",token)
+      return this.httpResponse.sendResponse(res,RESPONSE_DATA.SUCCESS,token);
+    }
+    catch(error){
+      throw error;
+    }
+  }
 
-  
+  /**
+   * @Description This function will used to reset the password
+   */
+  @Post('/reset-password')
+  @UseFilters(ApplicationErrorFilter)
+
+  async resetPassword(@Body() adminResetPassword:AdminResetPasswordDto, @Req() req:Request, @Res() res:Response) {
+    try{
+      const secret_key = this.configService.get<string>('SECRET_KEY') || '';
+      const token = req.headers.authorization || '';
+      await verifyToken(token,secret_key)
+      await this.onboardingService.resetPassword(adminResetPassword);
+      return this.httpResponse.sendResponse(res, RESPONSE_DATA.PASSWORD_RESET, {});
+    }
+    catch(error){
+      throw error;
+    }  
+  }
+
+  /**
+   * @Description This function will used for Admin logout request API
+   * @param req
+   * @param res
+   * @returns
+   */
+  @Post('/logout')
+  @ApiOperation({ summary: 'Admin logout request API' })
+  @ApiBearerAuth()
+  @UseGuards(JwtAdminAuthGuard)
+  async logout(@Req() req: Request, @Res() res: Response) {
+    const tokenData: SessionAdmin = req.user as SessionAdmin;
+    await this.adminSessionEntity.findOneAndUpdate({ adminId: tokenData.adminId },{status:ENUM.USER_PROFILE_STATUS.LOGOUT});
+    return this.httpResponse.sendResponse(res, RESPONSE_DATA.LOGOUT, {});
+  }
 }

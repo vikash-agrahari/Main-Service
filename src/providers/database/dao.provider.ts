@@ -24,12 +24,16 @@ export class Dao {
         .findOneAndUpdate(
           data,
           { $set: data },
-          { upsert: true, returnNewDocument: true },
+          { upsert: true, new: true },
         )
         .then((data: any) => {
           resolve(data);
         });
     });
+  }
+
+  async getAdminDetails(payload: any, projection: any = {}) {
+    return await this.findOne(payload, projection);
   }
 
   async saveData(data: any): Promise<any> {
