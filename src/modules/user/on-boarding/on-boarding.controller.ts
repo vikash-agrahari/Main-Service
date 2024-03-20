@@ -18,7 +18,7 @@ export class UserOnBoardingController {
   ) { }
 
 /**
-   * @author Sony 
+   * @author Appinventiv 
    * @description signup for user
    * @Body {CreateOnboardingDto}
    */
@@ -32,7 +32,7 @@ export class UserOnBoardingController {
   }
 
   /**
-   * @author Tap 
+   * @author Appinventiv 
    * @description login for client
    * @Body {loginDto}
    */
@@ -46,7 +46,7 @@ export class UserOnBoardingController {
   }
 
    /**
-   * @author Sony
+   * @author Appinventiv
    * @description This function will be used to get user profile details for client and vendor.
    */
    @Get('/')
