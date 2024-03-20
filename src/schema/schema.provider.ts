@@ -1,6 +1,6 @@
 import { Connection } from 'mongoose';
 import { UserSchema } from './user.schema';
-import { Logchema } from './log.schema';
+import { LogSchema } from './log.schema';
 import { TransactionSchema } from './transaction.schema';
 import { OrderSchema } from './order.schema';
 import { ENUM } from 'src/common/enum';
@@ -16,7 +16,7 @@ export const schemaProviders = [
   },
   {
     provide: 'LOG_MODEL',
-    useFactory: (connection: Connection) => connection.model(ENUM.COLLECTIONS.LOG, Logchema),
+    useFactory: (connection: Connection) => connection.model(ENUM.COLLECTIONS.LOG, LogSchema),
     inject: ['DATABASE_CONNECTION'],
   },
   {

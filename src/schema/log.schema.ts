@@ -10,7 +10,7 @@ export interface ILog extends Document {
    
   }
 
-export const Logchema = new mongoose.Schema(
+export const LogSchema = new mongoose.Schema(
   {
     request: { type: Schema.Types.Mixed, required: true },
     response: { type: Schema.Types.Mixed, required: true },

@@ -8,7 +8,7 @@ import { UserListingDto } from './dto/create-user-management.dto';
 export class UserManagementService {
   constructor(private readonly userEntity: UserEntity) {}
 
-  async clientListing(userListingDto: UserListingDto) {
+  async userListing(userListingDto: UserListingDto) {
     const options: UserListing = userListingDto;
     const pipeline = [];
     const matchCondition = [];
