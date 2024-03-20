@@ -1,7 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import { IsDateString, IsEnum, IsNotEmpty, IsNumber, IsOptional, IsString, ValidateIf } from 'class-validator';
-import { ENUM } from 'src/common/enum';
+import {  IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class UserListingDto {
   @ApiProperty()

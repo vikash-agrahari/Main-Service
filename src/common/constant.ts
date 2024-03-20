@@ -13,7 +13,7 @@ export const contentType = 'application/json';
 
 export const Swagger = {
   Title: 'Swagger Title',
-  Description: 'A Documentation for Nest.js Boilerplate APIs',
+  Description: 'A Documentation for Nest.js  APIs',
   Version: '1.0',
   AddApiKey: {
     Type: 'apiKey',

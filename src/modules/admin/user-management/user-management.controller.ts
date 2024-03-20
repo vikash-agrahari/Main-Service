@@ -7,7 +7,7 @@ import { JwtAdminAuthGuard } from 'src/guards/jwt-auth.guard';
 import { UserManagementService } from './user-management.service';
 import { UserListingDto } from './dto/create-user-management.dto';
 
-@ApiTags('Admin : Client Management')
+@ApiTags('Admin : User Management')
 @Controller('/')
 export class UserManagementController {
   constructor(
@@ -16,16 +16,16 @@ export class UserManagementController {
   ) {}
 
   /**
-   * @Description  API for client List
+   * @Description  API for user List
    * @param res
    * @returns
    */
   @UseGuards(JwtAdminAuthGuard)
   @ApiBearerAuth()
   @Get('/list')
-  @ApiOperation({ summary: 'API to list client' })
+  @ApiOperation({ summary: 'API to list user' })
   async clientListing(@Query() userListingDto: UserListingDto, @Res() res: Response) {
-    const clientListingData = await this.userManagementService.clientListing(userListingDto);
+    const clientListingData = await this.userManagementService.userListing(userListingDto);
     return this.httpResponse.sendResponse(res, RESPONSE_DATA.SUCCESS, clientListingData);
   }
 
