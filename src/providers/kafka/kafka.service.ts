@@ -3,6 +3,7 @@ import { IProducer } from 'src/interfaces/kafka.interface';
 import { KafkaProducer } from './producer.kafka';
 import {CHANNEL_TYPE} from "../../interfaces/common.interface"
 import { KAFKA_CONFIG } from 'src/interfaces/kafka.config.interface';
+import { ConfigService } from '@nestjs/config';
 
 export class KafkaService {
     private readonly producers = new Map<string, IProducer>();
@@ -14,8 +15,9 @@ export class KafkaService {
      */
     async produce(topic:string,message: Message) {
         try {
+            const configService = new ConfigService();
             // const topic = this.getTopicForChannel(channel);
-            const producer = await this.getProducer(topic);
+            const producer = await this.getProducer(topic,configService);
             await producer.produce(message);
             console.log('Kafka Producer Message Published :: ');
         } catch (error) {
@@ -28,10 +30,10 @@ export class KafkaService {
      * @param {string} topic
      * @returns {IProducer}
      */
-      private async getProducer(topic: string): Promise<IProducer> {
+      private async getProducer(topic: string, configService: ConfigService<Record<string, unknown>, false>): Promise<IProducer> {
         let producer = this.producers.get(topic);
         if (!producer) {
-            producer = new KafkaProducer(topic);
+            producer = new KafkaProducer(topic,configService);
             await producer.connect();
             this.producers.set(topic, producer);
         }

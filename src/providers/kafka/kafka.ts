@@ -1,12 +1,13 @@
 import { ConfigService } from '@nestjs/config';
+import configuration from 'config/configuration';
 import { Kafka, Admin, KafkaConfig, ITopicConfig } from 'kafkajs';
 import { KAFKA_CONFIG } from 'src/interfaces/kafka.config.interface';
 
 export class KafkaManager {
   protected kafka: Kafka;
   private admin: Admin;
-  private readonly config: ConfigService
-  constructor(  
+  constructor(  private readonly config: ConfigService  
+
     ) {
     this.kafka = new Kafka(this.getConfiguration());
 
@@ -18,13 +19,15 @@ export class KafkaManager {
    * @returns {KafkaConfig}
    */
   getConfiguration(): KafkaConfig {
-    const kafkaHost="localhost";
-    const kafkaPort=9092;
+    
+    const kafkaHost=this.config.get<string>('KAFKA_HOST');
+    const kafkaPort=this.config.get<string>('KAFKA_PORT');
+    console.log("credential is",kafkaHost,kafkaPort)
 
     const broker = `${kafkaHost}:${kafkaPort}`;
 
     const creds: KafkaConfig = {
-      clientId: 'KAFKA_CLIENT_ID',
+      clientId: this.config.get<string>('KAFKA_CLIENT_ID'),
       brokers: [broker],
       retry: {},
     };
@@ -85,5 +88,5 @@ export class KafkaManager {
     await this.admin.disconnect();
   }
 }
-
-//export const KafkaService = new KafkaManager();
+const configService=new ConfigService()
+export const KafkaService = new KafkaManager(configService);
