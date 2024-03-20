@@ -20,7 +20,7 @@ export class WebhookController {
   ) { }
 
   /**
-    * @author TAP
+    * @author Appinventiv
     * @description This function will be used to handel webhook.
     */
   @Post('/')

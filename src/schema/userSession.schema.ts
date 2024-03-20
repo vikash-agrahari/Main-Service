@@ -1,10 +1,4 @@
-/**
- * @file user_session.model
- * @description defines schema for user session model
- * @author TAP POC Team
- */
-
-import { Schema, SchemaTypes } from 'mongoose';
+import { Schema } from 'mongoose';
 import { ENUM } from '../common/enum';
 export interface IUserSession extends Document {
   userId: string;
@@ -30,8 +24,8 @@ const firebaseData = new Schema<IFirebaseData>(
 
 export const UserSessionSchema = new Schema(
   {
-    userId: { type: SchemaTypes.ObjectId, required: true, index: true, ref: ENUM.COLLECTIONS.USER },
-    status: { type: SchemaTypes.Number, default: ENUM.USER_PROFILE_STATUS.ACTIVE },
+    userId: { type: Schema.Types.ObjectId, required: true, index: true, ref: ENUM.COLLECTIONS.USER },
+    status: { type: Schema.Types.Number, default: ENUM.USER_PROFILE_STATUS.ACTIVE },
     firebaseData: { type: firebaseData },
   },
   {

@@ -37,7 +37,7 @@ export class OnboardingController {
   ) {}
 
   /**
-   * @author TAP
+   * @author Appinventiv
    * @description This function will used to add new admin
    * @Body createOnboardingDto
    */
@@ -52,7 +52,7 @@ export class OnboardingController {
   // }
 
   /**
-   * @author TAP
+   * @author Appinventiv
    * @description This function will be used for Admin login request API
    * @Body loginDto
    */
@@ -63,9 +63,7 @@ export class OnboardingController {
   @UseGuards(AuthGuard('basic'))
   async login(@Body() adminLoginDto: AdminLoginDto, @Res() response: Response) {
     try{
-
       const result= await this.onboardingService.login(adminLoginDto);
-      console.log("result is",result)
       return this.httpResponse.sendResponse(response, RESPONSE_DATA.OTP_SENT,result.otp);
     }
     catch(error){
@@ -74,6 +72,7 @@ export class OnboardingController {
   }
 
   /**
+   * @author Appinventiv
    * @Description This function will used for Admin get profile request API
    * @param req
    * @param res
@@ -90,6 +89,7 @@ export class OnboardingController {
   }
 
   /**
+   * @author Appinventiv
    * @Description This function will used for Admin update profile request API
    * @param req
    * @param res
@@ -106,6 +106,7 @@ export class OnboardingController {
   }
 
   /**
+   * @author Appinventiv
    * @Description This function will used for Forgot password api for admin
    * @param req
    * @param res
@@ -120,6 +121,7 @@ export class OnboardingController {
   }  
 
   /**
+   * @author Appinventiv
    * @Description This function will used to verify the otp
    * @param req
    * @param res
@@ -139,6 +141,7 @@ export class OnboardingController {
   }
 
   /**
+   * @author Appinventiv
    * @Description This function will used to reset the password
    */
   @Post('/reset-password')
@@ -155,6 +158,7 @@ export class OnboardingController {
   }
 
   /**
+   * @author Appinventiv
    * @Description This function will used for Admin logout request API
    * @param req
    * @param res
@@ -171,12 +175,12 @@ export class OnboardingController {
       return this.httpResponse.sendResponse(res, RESPONSE_DATA.LOGOUT, {});
     }
     catch(error){
-      console.error("error in lgout api",error)
     }
   }
 
 
   /**
+   * @author Appinventiv
    * @Description this function will use to change the password of admin
    * @Body AdminChangePasswordDto
    */

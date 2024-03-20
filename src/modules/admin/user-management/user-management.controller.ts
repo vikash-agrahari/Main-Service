@@ -16,6 +16,7 @@ export class UserManagementController {
   ) {}
 
   /**
+   * @author Appinventiv
    * @Description  API for user List
    * @param res
    * @returns
