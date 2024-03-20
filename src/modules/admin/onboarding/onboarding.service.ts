@@ -92,29 +92,7 @@ export class OnboardingService {
       },
     };
     await this.adminEntity.updateAdminDetails(checkData._id, payload);
-    // await this.mailerService.sendMail({
-    //   ...mailOptions,
-    //   from: this.configService.get<string>('EMAIL_FROM'),
-    // });
     return payload;
-    // const sessionData =
-    //   await this.adminSessionEntity.createAdminSession(payload);
-    // const token = await this.guardService.jwtTokenGeneration({
-    //   type: 'ADMIN_LOGIN',
-    //   sessionId: sessionData.id,
-    //   adminId: checkData._id,
-    // });
-    // return [
-    //   RESPONSE_DATA.LOGIN,
-    //   {
-    //     token: token,
-    //     adminId: checkData._id,
-    //     name: checkData.name,
-    //     email: checkData.email,
-    //     mobileNo: checkData.mobileNo,
-    //     title: checkData.title,
-    //   },
-    // ];
   }
 
   async forgotPassword(adminForgotPasswordDto: AdminForgotPasswordDto) {

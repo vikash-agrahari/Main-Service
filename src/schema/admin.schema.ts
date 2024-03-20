@@ -18,6 +18,7 @@ export const AdminSchema = new Schema(
     name: { type: Schema.Types.String, required: true },
     email: { type: Schema.Types.String, required: true, unique: true },
     mobileNo: { type: Schema.Types.String, required: true },
+    countryCode: { type: Schema.Types.Number, required: true },
     password: { type: Schema.Types.String, required: true },
     otp: {
       otp: { type: Schema.Types.String, required: true },
