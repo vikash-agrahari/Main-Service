@@ -92,7 +92,6 @@ const routes: Routes = [
     UserManagementModule,
     OrderManagementModule,
     FirebaseModule,
-    OnboardingModule,
     // kafkaModule,
   ],
   providers: [

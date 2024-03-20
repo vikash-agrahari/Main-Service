@@ -23,6 +23,15 @@ export const ENUM = {
     CAPTURED: 4,
   },
 
+  ENVIRONMENT: {
+    LOCAL: 'local',
+    DEVELOPMENT: 'dev',
+    QA: 'qa',
+    STAGING: 'stg',
+    PRE_PROD: 'pp',
+    PRODUCTION: 'prod',
+  },
+
   TRANSACTION_STATUS :{
     PENDING: 'PENDING',
     INITIATED: 'INITIATED',

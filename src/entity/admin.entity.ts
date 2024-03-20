@@ -25,9 +25,6 @@ export class AdminEntity extends Dao {
   }
 
   async updateAdminDetails(_id: string, update: any) {
-    if(!update.otp){
-      throw new BadRequestException('OTP is required for updating admin details');
-    }
     return await this.updateOne({ _id }, update);
   }
 }

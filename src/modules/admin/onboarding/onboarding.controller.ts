@@ -12,6 +12,7 @@ import { AdminSessionEntity } from 'src/entity/adminSession.entity';
 import { GuardService } from 'src/guards/guards.service';
 import { JwtAdminAuthGuard } from 'src/guards/jwt-auth.guard';
 import {
+  AdminChangePasswordDto,
   AdminCreateOnboardingDto,
   AdminForgotPasswordDto,
   AdminLoginDto,
@@ -21,9 +22,7 @@ import {
 } from './dto/create-onboarding.dto';
 import { CreateAdminSession, SessionAdmin } from './interface/onboarding.interface';
 import { OnboardingService } from './onboarding.service';
-import { verifyToken } from 'src/common/utils';
 import { AllExceptionsFilter } from 'src/filters/exceptionFilter';
-import { ApplicationErrorFilter } from 'src/filters/applicationFilter';
 
 @ApiTags('Admin : OnBoarding')
 @Controller('/')
@@ -63,8 +62,15 @@ export class OnboardingController {
   @ApiBasicAuth()
   @UseGuards(AuthGuard('basic'))
   async login(@Body() adminLoginDto: AdminLoginDto, @Res() response: Response) {
-    const [status, result] = await this.onboardingService.login(adminLoginDto);
-    return this.httpResponse.sendResponse(response, status, result);
+    try{
+
+      const result= await this.onboardingService.login(adminLoginDto);
+      console.log("result is",result)
+      return this.httpResponse.sendResponse(response, RESPONSE_DATA.OTP_SENT,result.otp);
+    }
+    catch(error){
+      console.error("error in login ",error)
+    }
   }
 
   /**
@@ -95,7 +101,7 @@ export class OnboardingController {
   @UseGuards(JwtAdminAuthGuard)
   async profileUpdate(@Body() adminUpdateProfileDto: AdminUpdateProfileDto, @Req() req: Request, @Res() res: Response) {
     const tokenData: SessionAdmin = req.user as SessionAdmin;
-    if (adminUpdateProfileDto.title) await this.adminEntity.updateAdminDetails(tokenData.adminId, adminUpdateProfileDto);
+    if (adminUpdateProfileDto) await this.adminEntity.updateAdminDetails(tokenData.adminId, adminUpdateProfileDto);
     return this.httpResponse.sendResponse(res, RESPONSE_DATA.PROFILE, {});
   }
 
@@ -106,6 +112,7 @@ export class OnboardingController {
    * @returns
    */
   @Post('/forgot-password')
+  @ApiBearerAuth()
   @UseGuards(AuthGuard('basic'))
   async forgotPassword(@Body() adminForgotPasswordDto: AdminForgotPasswordDto, @Req() req:Request, @Res() res:Response) {
     await this.onboardingService.forgotPassword(adminForgotPasswordDto);
@@ -119,13 +126,12 @@ export class OnboardingController {
    * @returns
    */
   @Post('/otp/verify')
-  @UseFilters(ApplicationErrorFilter)
+  @ApiBearerAuth()
   @UseGuards(AuthGuard('basic'))
   async otpVerify(@Body() adminOtpDto:AdminOtpDto, @Req() req:Request, @Res() res:Response,@Next() next:NextFunction) {
     try{
-      const token=await this.onboardingService.otpVerify(adminOtpDto);
-      console.log("token ",token)
-      return this.httpResponse.sendResponse(res,RESPONSE_DATA.SUCCESS,token);
+      const result=await this.onboardingService.otpVerify(adminOtpDto);
+      return this.httpResponse.sendResponse(res,RESPONSE_DATA.SUCCESS,result);
     }
     catch(error){
       throw error;
@@ -136,13 +142,10 @@ export class OnboardingController {
    * @Description This function will used to reset the password
    */
   @Post('/reset-password')
-  @UseFilters(ApplicationErrorFilter)
-
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard('basic'))
   async resetPassword(@Body() adminResetPassword:AdminResetPasswordDto, @Req() req:Request, @Res() res:Response) {
     try{
-      const secret_key = this.configService.get<string>('SECRET_KEY') || '';
-      const token = req.headers.authorization || '';
-      await verifyToken(token,secret_key)
       await this.onboardingService.resetPassword(adminResetPassword);
       return this.httpResponse.sendResponse(res, RESPONSE_DATA.PASSWORD_RESET, {});
     }
@@ -162,8 +165,28 @@ export class OnboardingController {
   @ApiBearerAuth()
   @UseGuards(JwtAdminAuthGuard)
   async logout(@Req() req: Request, @Res() res: Response) {
-    const tokenData: SessionAdmin = req.user as SessionAdmin;
-    await this.adminSessionEntity.findOneAndUpdate({ adminId: tokenData.adminId },{status:ENUM.USER_PROFILE_STATUS.LOGOUT});
-    return this.httpResponse.sendResponse(res, RESPONSE_DATA.LOGOUT, {});
+    try{
+      const tokenData: SessionAdmin = req.user as SessionAdmin;
+      await this.adminSessionEntity.findOneAndUpdate({ adminId: tokenData.adminId },{status:ENUM.USER_PROFILE_STATUS.LOGOUT});
+      return this.httpResponse.sendResponse(res, RESPONSE_DATA.LOGOUT, {});
+    }
+    catch(error){
+      console.error("error in lgout api",error)
+    }
   }
-}
+
+
+  /**
+   * @Description this function will use to change the password of admin
+   * @Body AdminChangePasswordDto
+   */
+  @Post('/change-password')
+  @ApiOperation({ summary:'Admin can change the password '})
+  @ApiBearerAuth()
+  @UseGuards(JwtAdminAuthGuard)
+  async changePassword(@Body() adminChangePasswordDto:AdminChangePasswordDto,@Req() req:Request,@Res() res:Response){
+    await this.onboardingService.changePasswordService(adminChangePasswordDto);
+    return this.httpResponse.sendResponse(res, RESPONSE_DATA.PASSWORD_RESET, {});
+  }
+  }
+

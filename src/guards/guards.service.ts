@@ -14,7 +14,7 @@ export class GuardService {
   private readonly HASH_ALGORITHM = 'sha256';
   private readonly JWT_PASSWORD = CONSTANT.JWT_PASSWORD;
 
-  constructor(private readonly jwtService: JwtService) {}
+  constructor(private readonly jwtService: JwtService ) {}
 
   public hashData(data: string, salt: string): string {
     try {
