@@ -1,11 +1,6 @@
 import { Body, Controller, Get, Post, Req, Res, UseGuards } from '@nestjs/common';
 import { Request, Response } from 'express';
-import {
-  ApiBasicAuth,
-  ApiBearerAuth,
-  ApiOperation,
-  ApiTags,
-} from '@nestjs/swagger';
+import {ApiBasicAuth,ApiBearerAuth,ApiOperation,ApiTags} from '@nestjs/swagger';
 import { HttpResponse } from 'src/common/httpResponse';
 import { UserOnBoardingService } from './on-boarding.service';
 import { AuthGuard } from '@nestjs/passport';
@@ -22,9 +17,8 @@ export class UserOnBoardingController {
     private readonly userOnBoardingService: UserOnBoardingService,
   ) { }
 
-
 /**
-   * @author Tap 
+   * @author Appinventiv 
    * @description signup for user
    * @Body {CreateOnboardingDto}
    */
@@ -32,25 +26,16 @@ export class UserOnBoardingController {
   @ApiOperation({ summary: 'sign api' })
   @ApiBasicAuth()
   @UseGuards(AuthGuard('basic'))
-  async signup(
-    @Body() createOnboardingDto: CreateOnboardingDto,
-    @Res() response: any,
-  ) {
-    try {
+  async signup(@Body() createOnboardingDto: CreateOnboardingDto,@Res() response: any,) {
       const [status, result] = await this.userOnBoardingService.signUp(createOnboardingDto);
       return this.httpResponse.sendResponse(response, status, result);
-    } catch (error) {
-      throw error;
-    }
-
   }
 
   /**
-   * @author Tap 
+   * @author Appinventiv 
    * @description login for client
    * @Body {loginDto}
    */
-
   @Post('/login')
   @ApiOperation({ summary: 'Login api' })
   @ApiBasicAuth()
@@ -61,10 +46,9 @@ export class UserOnBoardingController {
   }
 
    /**
-   * @author TAP
+   * @author Appinventiv
    * @description This function will be used to get user profile details for client and vendor.
    */
-
    @Get('/')
    @ApiOperation({ summary: 'User profile request API' })
    @ApiBearerAuth()

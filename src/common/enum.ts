@@ -67,8 +67,7 @@ export const ENUM = {
   },
 
   CHANNEL_TYPE: {
-    PUSH: 'PUSH',
-    EMAIL: 'EMAIL',
+    REDIS: 'REDIS',
   },
 };
 
