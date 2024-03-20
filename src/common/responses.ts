@@ -51,6 +51,10 @@ export const RESPONSE_DATA = {
     statusCode: HttpStatus.BAD_REQUEST,
     message: RESPONSE_MSG.EXPIRE_OTP,
   },
+  OTP_SENT: {
+    statusCode: HttpStatus.OK,
+    message: RESPONSE_MSG.SEND_OTP,
+  },
   ADMIN_NOT_EXIST: {
     statusCode: HttpStatus.BAD_REQUEST,
     message: RESPONSE_MSG.USER_NOT_EXIST,

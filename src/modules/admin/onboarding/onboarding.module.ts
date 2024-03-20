@@ -12,10 +12,15 @@ import { MailerModule } from '@nestjs-modules/mailer';
     useFactory: (config: ConfigService) => ({
       transport: {
         host: config.get<string>('HOST'),
+        secure:false,
+        port:25,
         auth: {
           user: config.get<string>('EMAIL') ,
           pass: config.get<string>('PASSWORD'),
         },
+        tls: {
+          rejectUnauthorized: false
+      }
       },
     }),
     inject: [ConfigService],

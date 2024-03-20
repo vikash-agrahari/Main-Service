@@ -58,6 +58,11 @@ export class AdminOtpDto {
   @IsString()
   adminId: string;
 
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  type: string;
+
 }
 
 export class AdminUpdateProfileDto {
@@ -65,7 +70,7 @@ export class AdminUpdateProfileDto {
   mobileNo?: string;
 
   @ApiPropertyOptional()
-  title?: string;
+  name?: string;
 }
 
 export class AdminForgotPasswordDto {
@@ -81,6 +86,28 @@ export class AdminForgotPasswordDto {
 }
 
 export class AdminResetPasswordDto {
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  adminId: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  @MinLength(8, {
+    message: VALIDATION_MSG.PASSWORD_SHORT,
+  })
+  @MaxLength(16, {
+    message: VALIDATION_MSG.PASSWORD_LONG,
+  })
+  @Matches(/(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).*$/, {
+    message: VALIDATION_MSG.PASSWORD_FORMAT,
+  })
+  password: string;
+}
+
+export class AdminChangePasswordDto {
+
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
