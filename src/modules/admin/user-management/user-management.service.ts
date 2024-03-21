@@ -2,11 +2,12 @@ import { Injectable } from '@nestjs/common';
 import { ENUM } from 'src/common/enum';
 import { UserEntity } from 'src/entity/user.entity';
 import { UserListing } from './interface/user-management.interface';
-import { UserListingDto } from './dto/create-user-management.dto';
+import { BlockUnblockDto, UserListingDto } from './dto/create-user-management.dto';
+import { UserSessionEntity } from 'src/entity/userSession.entity';
 
 @Injectable()
 export class UserManagementService {
-  constructor(private readonly userEntity: UserEntity) {}
+  constructor(private readonly userEntity: UserEntity,private readonly userSession:UserSessionEntity) {}
 
   async userListing(userListingDto: UserListingDto) {
     const options: UserListing = userListingDto;
@@ -40,8 +41,13 @@ export class UserManagementService {
      pipeline.push({ $sort: { createdAt: -1 } });
     options.getCount = true;
     return await this.userEntity.listing(pipeline, options);
+  } 
+
+  async blockUnblockService(blockUnblockDto:BlockUnblockDto){
+    const checkClientExist = await this.userEntity.getUserDetails({_id:blockUnblockDto.userId});
+    if(checkClientExist){
+      await this.userEntity.findOneAndUpdate({_id:blockUnblockDto.userId},{blockedStatus:blockUnblockDto.blockedStatus,blockReason:blockUnblockDto.blockReason},{new:true})
+     
+    }
   }
-
-
- 
 }

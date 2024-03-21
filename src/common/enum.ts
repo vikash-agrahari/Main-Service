@@ -23,6 +23,22 @@ export const ENUM = {
     CAPTURED: 4,
   },
 
+
+  NOTIFICATION_TYPE: {
+    PUSH: 1,
+    SMS: 2,
+    EMAIL: 3,
+    ADMIN_PUSH: 4,
+    ADMIN_SMS: 5,
+    ADMIN_EMAIL: 6,
+  },
+
+
+  USER_BLOCK_STATUS: {
+    BLOCKED: 3,
+    ACTIVE: 2,
+  },
+
   ENVIRONMENT: {
     LOCAL: 'local',
     DEVELOPMENT: 'dev',
@@ -68,6 +84,7 @@ export const ENUM = {
 
   CHANNEL_TYPE: {
     REDIS: 'REDIS',
+    EMAIL: 'EMAIL'
   },
 };
 

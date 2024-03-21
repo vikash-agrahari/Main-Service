@@ -15,8 +15,10 @@ export const UserSchema = new mongoose.Schema(
     email: { type: Schema.Types.String, required: true, unique: true },
     mobileNo: { type: Schema.Types.String },
     password: { type: Schema.Types.String },
+    blockedStatus: { type: Schema.Types.Number, default: ENUM.USER_BLOCK_STATUS.ACTIVE },
+    blockReason: { type: Schema.Types.String },
     status: {
-      type: Schema.Types.Number,
+    type: Schema.Types.Number,
       default: ENUM.USER_PROFILE_STATUS.ACTIVE,
     },
   },
